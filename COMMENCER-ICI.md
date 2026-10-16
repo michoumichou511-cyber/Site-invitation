@@ -1,5 +1,9 @@
 # Comment démarrer avec Claude Code
 
+> **État du projet** : les phases 0 à 6 sont construites et testées. Pour mettre le site en
+> ligne, suivez `docs/DEPLOIEMENT.md` ; la liste de ce qui reste avant d'ouvrir aux
+> clients est dans `docs/LANCEMENT.md`.
+
 Ce dossier est le point de départ du projet. Claude Code lit automatiquement
 `CLAUDE.md` à chaque session ; les détails sont dans `docs/`.
 

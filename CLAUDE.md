@@ -9,6 +9,7 @@ en français et en arabe. Public : téléphones Android moyens en 4G, ouverts de
 
 docs/PRD.md · docs/TRD.md · docs/APP_FLOW.md · docs/UI_UX.md · docs/BACKEND_SCHEMA.md
 · docs/IMPLEMENTATION_PLAN.md · docs/ANIMATIONS.md
+· docs/DEPLOIEMENT.md (mise en ligne) · docs/LANCEMENT.md (reste à faire, choix faits)
 En cas de contradiction : BACKEND_SCHEMA (données) et UI_UX (design) font foi.
 Prototypes de référence : design/references/hero-3d.html, invitation-envelope.html.
 
@@ -26,7 +27,29 @@ Turnstile, Cron Triggers, zod.
 - pnpm check (lint + typecheck + tests + build) · pnpm format
 - pnpm db:generate / pnpm db:migrate:local / pnpm db:migrate:remote
 - pnpm auth:generate (régénère src/db/auth-schema.ts) · pnpm cf-typegen (types des bindings)
+- pnpm db:seed:local / pnpm db:seed:remote (modèles + démos, depuis src/invitation/demos.ts)
+- pnpm admin:create -- email "mot de passe" "Nom" [--remote]
 - pnpm preview (Wrangler, conditions Cloudflare réelles) / pnpm deploy
+- pnpm budget <url> (JS et polices d'une invitation < 150 Ko)
+
+## Organisation du code
+
+- src/app/[locale]/(site)/ : site public, commande (/commander), suivi, connexion, espace
+  client (/compte) · src/app/[locale]/(admin)/admin/ : back-office · src/app/i/ : invitations
+- src/invitation/ : moteur (engine/), ouvertures (openers/), sections/, themes/<slug>/,
+  server/ (chargement D1, rendu) · src/actions/ : Server Actions (public, client/, admin/)
+- src/lib/ : auth (garde admin + 2FA, accès client), commandes, invités, médias R2, sécurité
+- worker.ts : entrée Cloudflare (site OpenNext + Cron de purge) ; logique dans src/lib/purge.ts
+
+## Pièges déjà rencontrés
+
+- next-intl sans middleware : chaque layout ET page appelle setRequestLocale(locale) avant
+  toute traduction, sinon la requête entière reste en français.
+- Textes côté navigateur : seulement les namespaces utiles (ClientMessages par section).
+- D1 : 100 variables SQL max par requête → insérer par lots (10 invités par INSERT).
+- Classes conditionnelles : `nom ${cond ? "x" : ""}` (espace hors des guillemets).
+- Le Worker gratuit est limité à 3 Mo compressés (≈ 2,3 Mo aujourd'hui) : pas de grosse
+  librairie côté serveur (next/og, SDK lourds).
 
 ## Règles de code
 
@@ -38,8 +61,10 @@ Turnstile, Cron Triggers, zod.
   d'accès de BACKEND_SCHEMA). Aucun accès direct à la base depuis le navigateur.
 - Écritures via Server Actions validées par zod + Turnstile + limite de requêtes.
 - Secrets via wrangler secret, jamais dans le code ni dans le dépôt.
-- Les thèmes vivent dans src/invitation/themes/<slug>/ (theme.ts, schema.ts, preview.jpg)
-  et ne lisent jamais la base : ils reçoivent une config validée par zod.
+- Les thèmes vivent dans src/invitation/themes/<slug>/ (theme.ts, schema.ts) + aperçu dans
+  public/themes/<slug>/preview.svg, et ne lisent jamais la base : ils reçoivent une config
+  validée par zod. Nouveau thème : l'ajouter dans themes/index.ts et dans demos.ts, puis
+  vérifier les contrastes (≥ 4,5:1) et lancer tests/e2e/themes.spec.ts.
 - WhatsApp : uniquement des liens wa.me pré-remplis ouverts par l'utilisateur.
   Aucun envoi automatique (pas d'API WhatsApp au MVP).
 - Invitations en noindex. Codes invités aléatoires (10 caractères).
