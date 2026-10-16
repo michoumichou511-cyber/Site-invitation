@@ -5,12 +5,74 @@
     "description": "Invitations-sites animées pour mariages, fiançailles, anniversaires et naissances, en français et en arabe, payées en dinars."
   },
   "common": {
-    "switchLanguage": "عرض الموقع بالعربية"
+    "switchLanguage": "عرض الموقع بالعربية",
+    "brand": "Lou'lou'a",
+    "skip": "Aller au contenu",
+    "menu": "Menu",
+    "close": "Fermer",
+    "whatsappUs": "Écrivez-nous sur WhatsApp",
+    "whatsappMessage": "Bonjour, j'ai une question sur les invitations Lou'lou'a.",
+    "from": "à partir de {price}",
+    "da": "{amount} DA",
+    "seeModels": "Voir les modèles",
+    "customize": "Personnaliser ce modèle",
+    "seeDemo": "Voir la démo",
+    "fullscreen": "Plein écran",
+    "back": "Retour"
   },
   "home": {
     "brand": "Lou'lou'a",
     "title": "Des invitations qui font « waouh »",
-    "subtitle": "Mariage, fiançailles, anniversaire, naissance : une invitation animée, en français et en arabe, avec RSVP, carte et musique."
+    "subtitle": "Mariage, fiançailles, anniversaire, naissance : une invitation animée, en français et en arabe, avec RSVP, carte et musique.",
+    "eyebrow": "Invitations digitales · Algérie",
+    "heroTitle": "L'invitation qui s'ouvre comme une fête",
+    "heroLead": "Un lien à envoyer sur WhatsApp : animation d'ouverture, musique, itinéraire vers la salle et confirmation de présence en deux gestes.",
+    "howCta": "Comment ça marche",
+    "chipRsvpK": "RSVP",
+    "chipRsvpV": "Réponses en direct",
+    "chipMapK": "Itinéraire",
+    "chipMapV": "Maps et Waze en 1 clic",
+    "chipMusicK": "Musique",
+    "chipMusicV": "Démarre à l'ouverture",
+    "chipDayK": "Jour J",
+    "chipDayV": "{days} j · {hours} h",
+    "phoneLabel": "Téléphone montrant nos invitations",
+    "slides": [
+      "Mariage · modèle Karakou",
+      "Anniversaire · modèle Ciel",
+      "Naissance · modèle Baie d'Alger"
+    ],
+    "howTitle": "Trois étapes, livré en 24 h",
+    "how1": "Choisissez un modèle",
+    "how1p": "Mariage, fiançailles, anniversaire, naissance… des modèles à l'identité algérienne.",
+    "how2": "Personnalisez",
+    "how2p": "Noms, date, salle, photos, musique. Aperçu gratuit avant de payer.",
+    "how3": "Partagez",
+    "how3p": "Un lien et un QR code, en français et en arabe, à envoyer sur WhatsApp.",
+    "featuredTitle": "Nos modèles",
+    "featuredAll": "Tout le catalogue",
+    "compareTitle": "Digital ou papier ?",
+    "compareDigital": "Invitation Lou'lou'a",
+    "comparePaper": "Carte papier",
+    "compareRows": {
+      "price": ["Prix", "Dès 2 500 DA, sans impression", "Impression, enveloppes et distribution"],
+      "rsvp": [
+        "Qui vient ?",
+        "Réponses en direct, nombre de personnes",
+        "À demander à chacun par téléphone"
+      ],
+      "map": ["Trouver la salle", "Google Maps et Waze en un clic", "Adresse écrite à la main"],
+      "music": ["Ambiance", "Musique et animation d'ouverture", "—"],
+      "delay": ["Délai", "Livrée en 24 h", "Plusieurs jours d'impression"],
+      "eco": ["Écologie", "Zéro papier", "Papier et transport"]
+    },
+    "packsTitle": "Trois packs, prix en dinars",
+    "packsAll": "Détail des tarifs",
+    "reviewsTitle": "Ils nous ont fait confiance",
+    "faqTitle": "Questions fréquentes",
+    "faqAll": "Toutes les questions",
+    "ctaTitle": "Votre invitation, prête demain",
+    "ctaText": "Choisissez un modèle, voyez l'aperçu gratuitement, payez par BaridiMob ou CCP."
   },
   "invitation": {
     "openHint": "Touchez le sceau pour ouvrir",
@@ -111,5 +173,270 @@
     "hajj": "Retour du hajj",
     "aid_ramadan": "Aïd et Ramadan",
     "entreprise": "Entreprise"
+  },
+  "nav": {
+    "home": "Accueil",
+    "models": "Modèles",
+    "pricing": "Tarifs",
+    "reviews": "Avis",
+    "faq": "FAQ",
+    "contact": "Contact",
+    "order": "Créer mon invitation",
+    "track": "Suivre ma commande",
+    "account": "Mon espace"
+  },
+  "packs": {
+    "essentiel": {
+      "name": "Essentiel",
+      "price": "2 500 DA",
+      "delay": "Livré en 24 h",
+      "items": [
+        "Un modèle du catalogue personnalisé",
+        "Noms, date, lieu, musique, 3 photos",
+        "Carte, itinéraire et compte à rebours",
+        "Lien + QR code à partager",
+        "1 modification"
+      ]
+    },
+    "premium": {
+      "name": "Premium",
+      "price": "5 000 DA",
+      "delay": "Livré en 24 h",
+      "items": [
+        "Tout l'Essentiel",
+        "RSVP avec tableau de bord",
+        "Lien au prénom de chaque invité",
+        "Galerie et livre d'or",
+        "Programme multi-événements",
+        "Version image à transférer",
+        "Modifications illimitées"
+      ]
+    },
+    "prestige": {
+      "name": "Prestige",
+      "price": "à partir de 10 000 DA",
+      "delay": "3 à 5 jours",
+      "items": [
+        "Tout le Premium",
+        "Design sur mesure",
+        "Ouverture 3D sur mesure",
+        "QR d'entrée par invité",
+        "Vidéo d'annonce pour les réseaux",
+        "Support prioritaire"
+      ]
+    },
+    "popular": "Le plus choisi",
+    "choose": "Choisir {name}",
+    "optionsTitle": "Options à la carte",
+    "options": [
+      "Vidéo « story » 9:16 de l'invitation",
+      "Nom de domaine personnalisé",
+      "Quelques cartes papier avec le QR",
+      "Livraison express en 6 h",
+      "Offre Entreprise sur devis"
+    ],
+    "note": "Prix de lancement, payables par BaridiMob ou CCP. Pas de fausse réduction : le prix affiché est le prix payé."
+  },
+  "faq": {
+    "title": "Questions fréquentes",
+    "items": [
+      [
+        "Comment mes invités reçoivent-ils l'invitation ?",
+        "Vous recevez un lien et un QR code. Vous l'envoyez vous-même sur WhatsApp, Messenger ou par SMS ; avec le pack Premium, chaque invité a son lien à son prénom."
+      ],
+      [
+        "Faut-il installer une application ?",
+        "Non. L'invitation s'ouvre dans le navigateur du téléphone, y compris depuis WhatsApp, Instagram ou TikTok."
+      ],
+      [
+        "Comment payer ?",
+        "Par BaridiMob ou virement CCP : vous envoyez la photo du reçu depuis le site, nous le vérifions et lançons votre invitation. Le paiement par carte Edahabia/CIB arrive bientôt."
+      ],
+      [
+        "Puis-je voir l'invitation avant de payer ?",
+        "Oui. Après avoir rempli le formulaire, vous voyez votre invitation en aperçu (avec un filigrane), gratuitement."
+      ],
+      [
+        "Mes photos sont-elles protégées ?",
+        "Les invitations ne sont pas référencées sur Google. Vous pouvez choisir le mode discret (aucune photo des mariés) et ajouter un code d'accès."
+      ],
+      [
+        "L'invitation existe-t-elle en arabe ?",
+        "Oui, chaque invitation est en français et en arabe, avec un bouton pour passer de l'un à l'autre."
+      ],
+      [
+        "Et pour les personnes âgées ?",
+        "Le texte est grand et lisible, il y a un bouton pour appeler la famille, et le pack Premium inclut une version image à transférer."
+      ],
+      [
+        "Puis-je modifier mon invitation ?",
+        "Oui : une modification avec le pack Essentiel, illimitées avec Premium et Prestige, depuis votre espace client."
+      ],
+      [
+        "Que se passe-t-il après la fête ?",
+        "L'invitation affiche un message de remerciement et le livre d'or reste ouvert. Les données des invités sont supprimées 6 mois après l'événement."
+      ]
+    ]
+  },
+  "catalog": {
+    "title": "Nos modèles",
+    "lead": "Chaque modèle s'ouvre dans une démo, toujours datée dans le futur. Touchez une carte pour l'essayer.",
+    "allEvents": "Tous",
+    "allStyles": "Tous les styles",
+    "eventsLabel": "Événement",
+    "stylesLabel": "Style",
+    "empty": "Aucun modèle pour ce choix pour l'instant.",
+    "emptyCta": "Voir tous les modèles",
+    "badges": {
+      "nouveau": "Nouveau",
+      "populaire": "Populaire"
+    },
+    "categoryTitle": "Modèles {event}",
+    "styles": {
+      "karakou": "Karakou",
+      "zellige": "Zellige",
+      "casbah": "Casbah",
+      "kabyle": "Bijoux kabyles",
+      "mzab": "M'zab",
+      "baie": "Baie d'Alger",
+      "tassili": "Tassili",
+      "aures": "Aurès",
+      "ciel": "Ciel"
+    }
+  },
+  "template": {
+    "included": "Ce qui est inclus",
+    "includedItems": [
+      "Animation d'ouverture et musique",
+      "Date grégorienne et date de l'hégire",
+      "Compte à rebours",
+      "Google Maps, Waze et calendrier",
+      "Confirmation de présence (Premium)",
+      "Livre d'or (Premium)",
+      "Français et arabe"
+    ],
+    "packs": "Packs compatibles",
+    "others": "Autres modèles",
+    "demoHint": "Démo interactive : touchez le sceau.",
+    "events": "Pour : {events}"
+  },
+  "pricing": {
+    "title": "Tarifs",
+    "lead": "Trois packs pour toutes les fêtes, payés en dinars. L'aperçu est toujours gratuit."
+  },
+  "reviews": {
+    "title": "Avis clients",
+    "lead": "Uniquement de vrais avis, publiés avec l'accord de nos clients.",
+    "empty": "Nous venons d'ouvrir : les premiers avis de nos clients apparaîtront ici.",
+    "rating": "{rating} sur 5"
+  },
+  "contact": {
+    "title": "Contact",
+    "lead": "Une question, une demande particulière ? Le plus simple est WhatsApp.",
+    "whatsapp": "WhatsApp",
+    "email": "E-mail",
+    "instagram": "Instagram",
+    "tiktok": "TikTok",
+    "hours": "Réponse en général dans la journée, 7 jours sur 7."
+  },
+  "footer": {
+    "tagline": "Invitations digitales animées, pensées en Algérie.",
+    "site": "Le site",
+    "legal": "Informations",
+    "cgv": "Conditions de vente",
+    "privacy": "Confidentialité",
+    "refund": "Remboursement",
+    "rights": "© {year} Lou'lou'a. Tous droits réservés."
+  },
+  "legal": {
+    "draft": "Brouillon à faire valider par un juriste avant l'ouverture aux clients.",
+    "updated": "Dernière mise à jour : {date}",
+    "pages": {
+      "cgv": {
+        "title": "Conditions générales de vente",
+        "sections": [
+          [
+            "Objet",
+            "Les présentes conditions encadrent la vente d'invitations digitales (sites d'invitation animés) par Lou'lou'a à ses clients."
+          ],
+          [
+            "Commande",
+            "Le client choisit un modèle, remplit le formulaire et valide un aperçu gratuit. La commande est enregistrée avec un code de suivi."
+          ],
+          [
+            "Prix et paiement",
+            "Les prix sont indiqués en dinars algériens (DA), toutes taxes comprises. Le paiement se fait par BaridiMob ou virement CCP ; la commande est lancée après vérification du reçu."
+          ],
+          [
+            "Livraison",
+            "L'invitation est livrée sous forme de lien et de QR code dans les délais du pack choisi (24 h pour Essentiel et Premium, 3 à 5 jours pour Prestige), à compter de la validation du paiement."
+          ],
+          [
+            "Modifications",
+            "Le nombre de modifications incluses dépend du pack : une pour Essentiel, illimitées pour Premium et Prestige, jusqu'à la date de l'événement."
+          ],
+          [
+            "Contenus du client",
+            "Le client garantit disposer des droits sur les textes, photos et musiques qu'il fournit et en reste responsable. Nous refusons tout contenu illicite ou offensant."
+          ],
+          [
+            "Durée",
+            "L'invitation reste en ligne jusqu'à 6 mois après l'événement, puis les données des invités sont supprimées."
+          ],
+          ["Contact", "Pour toute question : WhatsApp ou e-mail indiqués sur la page Contact."]
+        ]
+      },
+      "confidentialite": {
+        "title": "Politique de confidentialité",
+        "sections": [
+          [
+            "Données collectées",
+            "Client : nom, numéro WhatsApp, e-mail, contenus de l'invitation. Invités : nom, réponse, nombre de places, message, et éventuellement numéro de téléphone ajouté par le client."
+          ],
+          [
+            "Pourquoi",
+            "Pour créer et livrer l'invitation, gérer les réponses, vous contacter au sujet de votre commande. Aucune revente, aucune publicité ciblée."
+          ],
+          [
+            "Base légale",
+            "Votre consentement, donné lors de la commande, conformément à la loi algérienne n° 18-07 relative à la protection des personnes physiques dans le traitement des données à caractère personnel."
+          ],
+          [
+            "Hébergement",
+            "Les données sont hébergées chez Cloudflare (base D1 et stockage R2), dont les serveurs peuvent se trouver hors d'Algérie."
+          ],
+          [
+            "Durée de conservation",
+            "Les données des invités sont supprimées 6 mois après l'événement. Les commandes et paiements sont conservés pour la comptabilité, sans les données des invités."
+          ],
+          [
+            "Vie privée des invitations",
+            "Les invitations ne sont pas référencées par les moteurs de recherche. Le mode discret et le code d'accès limitent encore leur visibilité."
+          ],
+          [
+            "Vos droits",
+            "Vous pouvez demander l'accès, la correction ou la suppression de vos données à tout moment depuis votre espace ou en nous écrivant."
+          ]
+        ]
+      },
+      "remboursement": {
+        "title": "Politique de remboursement",
+        "sections": [
+          [
+            "Avant la création",
+            "Si la commande est annulée avant que nous commencions la création, le paiement est remboursé en totalité."
+          ],
+          [
+            "Après la livraison",
+            "L'invitation étant un service personnalisé, elle n'est plus remboursable une fois livrée. Les corrections prévues par le pack restent possibles."
+          ],
+          [
+            "Erreur de notre part",
+            "Si l'invitation livrée ne correspond pas à l'aperçu validé, nous la corrigeons sans frais ou la remboursons."
+          ],
+          ["Délai", "Les remboursements sont effectués par virement CCP ou BaridiMob sous 7 jours."]
+        ]
+      }
+    }
   }
 }

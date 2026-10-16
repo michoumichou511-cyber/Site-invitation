@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 570" width="270" height="570">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4D1919"/><stop offset="1" stop-color="#381111"/></linearGradient>
+    <pattern id="fetla" width="48" height="48" patternUnits="userSpaceOnUse"><g fill="none" stroke="#B49068" stroke-width=".6" opacity=".25"><path d="M24 4c5 6 5 14 0 20-5-6-5-14 0-20zM24 44c5-6 5-14 0-20-5 6-5 14 0 20zM4 24c6-5 14-5 20 0-6 5-14 5-20 0zM44 24c-6-5-14-5-20 0 6 5 14 5 20 0z"/></g></pattern>
+  </defs>
+  <rect width="270" height="570" fill="url(#bg)"/>
+  <rect width="270" height="570" fill="url(#fetla)"/>
+  <path d="M35 510V180a100 100 0 0 1 200 0v330" fill="none" stroke="#B49068" stroke-width="1.5"/>
+  <path d="M45 500V185a90 90 0 0 1 180 0v315" fill="none" stroke="#B49068" stroke-width=".6"/>
+  <g transform="translate(135 125)" fill="none" stroke="#B49068" stroke-width="1"><rect x="-17" y="-17" width="34" height="34"/><rect x="-17" y="-17" width="34" height="34" transform="rotate(45)"/></g>
+  <text x="135" y="260" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="44" fill="#F6EDE3">Amine</text>
+  <text x="135" y="295" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="22" fill="#B49068">&amp;</text>
+  <text x="135" y="340" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="44" fill="#F6EDE3">Sara</text>
+  <text x="135" y="385" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" fill="#E3D3C2">Salle El Djazira · 19h00</text>
+  <rect x="75" y="440" width="120" height="32" rx="16" fill="#B49068"/>
+  <text x="135" y="461" text-anchor="middle" font-family="system-ui, sans-serif" font-weight="700" font-size="13" fill="#381111">Je confirme</text>
+</svg>

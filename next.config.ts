@@ -8,7 +8,11 @@ const nextConfig: NextConfig = {
   // Images déjà compressées en WebP à l'envoi : pas d'optimisation payante.
   images: { unoptimized: true },
   async redirects() {
-    return [{ source: "/", destination: "/fr", permanent: false }];
+    return [
+      { source: "/", destination: "/fr", permanent: false },
+      // Démo plein écran d'un modèle du catalogue.
+      { source: "/demo/:slug", destination: "/i/demo-:slug", permanent: false },
+    ];
   },
   async headers() {
     return [

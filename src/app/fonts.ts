@@ -11,9 +11,10 @@ export const marcellus = Marcellus({
   variable: "--font-marcellus",
 });
 
+/** `subsets` = polices préchargées ; les caractères arabes se chargent quand la page en a besoin. */
 export const tajawal = Tajawal({
   weight: ["400", "500", "700"],
-  subsets: ["arabic", "latin"],
+  subsets: ["latin"],
   display: "swap",
   variable: "--font-tajawal",
 });
