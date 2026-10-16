@@ -24,8 +24,15 @@
     // Cache des pages Next.js (voir https://opennext.js.org/cloudflare/caching).
     { "binding": "NEXT_INC_CACHE_R2_BUCKET", "bucket_name": "louloua-opennext-cache" },
   ],
+  // Limites de requêtes (gratuites) : RSVP 10/min/IP, formulaires 5/min/IP.
+  "ratelimits": [
+    { "name": "RSVP_LIMITER", "namespace_id": "1001", "simple": { "limit": 10, "period": 60 } },
+    { "name": "FORM_LIMITER", "namespace_id": "1002", "simple": { "limit": 5, "period": 60 } },
+  ],
   "vars": {
     "PUBLIC_SITE_URL": "http://localhost:3000",
+    // Clé publique Turnstile (clé de test « toujours OK » en local, à remplacer en production).
+    "TURNSTILE_SITE_KEY": "1x00000000000000000000AA",
   },
   "observability": { "enabled": true },
 }

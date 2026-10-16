@@ -43,7 +43,7 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm exec playwright install --with-deps chromium
       - run: cp .dev.vars.example .dev.vars
-      - run: pnpm db:migrate:local
+      - run: pnpm db:migrate:local && pnpm db:seed:local
         env:
           CI: "1"
       - run: pnpm test:e2e
