@@ -1,45 +1,8 @@
-import { expect, test, type Browser, type Page } from "@playwright/test";
-import { ADMIN } from "./global-setup";
-import { fillWizard, orderToPayment, sendReceipt } from "./helpers";
-import { secretFromUri, totp } from "./totp";
+import { expect, test } from "@playwright/test";
+import { adminLogin, visitorOrder } from "./admin-helpers";
+import { sendReceipt } from "./helpers";
 
 test.describe.configure({ mode: "serial", timeout: 120_000 });
-
-let secret = "";
-
-async function adminLogin(browser: Browser): Promise<Page> {
-  const page = await (
-    await browser.newContext({ viewport: { width: 1280, height: 900 } })
-  ).newPage();
-  await page.goto("/fr/admin/connexion");
-  await page.getByLabel("E-mail").fill(ADMIN.email);
-  await page.getByLabel("Mot de passe").fill(ADMIN.password);
-  await page.getByRole("button", { name: "Se connecter" }).click();
-  if (!secret) {
-    // Première connexion : activation obligatoire de la 2FA.
-    await expect(page).toHaveURL(/\/fr\/admin\/2fa$/, { timeout: 30_000 });
-    await page.getByLabel("Votre mot de passe").fill(ADMIN.password);
-    await page.getByRole("button", { name: "Générer le QR code" }).click();
-    secret = secretFromUri((await page.getByTestId("totp-uri").textContent())!);
-    await page.getByLabel("Code à 6 chiffres").fill(totp(secret));
-    await page.getByRole("button", { name: "Activer" }).click();
-  } else {
-    await page.getByLabel(/Code à 6 chiffres/).fill(totp(secret));
-    await page.getByRole("button", { name: "Vérifier" }).click();
-  }
-  await expect(page.getByRole("heading", { name: "Tableau de bord" })).toBeVisible({
-    timeout: 30_000,
-  });
-  return page;
-}
-
-async function visitorOrder(page: Page) {
-  await fillWizard(page, { first: "Rayan", second: "Ines" });
-  const code = await orderToPayment(page);
-  await sendReceipt(page);
-  await expect(page).toHaveURL(/\/commander\/merci/);
-  return code;
-}
 
 test("une commande va de l'accueil à « Livrée » sans toucher à la base", async ({
   page,

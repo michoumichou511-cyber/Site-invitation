@@ -59,11 +59,12 @@ export function InvitationApp({
 
   // Pas de défilement tant que l'enveloppe est fermée.
   useEffect(() => {
+    if (embedded) return;
     document.documentElement.style.overflow = opened ? "" : "hidden";
     return () => {
       document.documentElement.style.overflow = "";
     };
-  }, [opened]);
+  }, [opened, embedded]);
 
   useEffect(() => {
     if (!canvas.current) return;

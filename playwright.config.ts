@@ -1,6 +1,7 @@
 import { defineConfig, devices } from "@playwright/test";
 
-const PORT = Number(process.env.PORT ?? 3100);
+// Même port que BETTER_AUTH_URL (.dev.vars) : les liens magiques y redirigent.
+const PORT = Number(process.env.PORT ?? 3000);
 
 export default defineConfig({
   testDir: "tests/e2e",
