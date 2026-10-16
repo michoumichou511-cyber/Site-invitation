@@ -34,10 +34,12 @@ export function sniffMime(bytes: Uint8Array): string | null {
   return null;
 }
 
+export type FileMeta = { contentType: string };
+
 export type StoredFile = { key: string; mimeType: string; sizeBytes: number };
 
 /**
- * Vérifie et range un fichier dans R2.
+ * Vérifie et range un fichier dans le stockage (Workers KV, binding FILES).
  * - public/… : photos et musiques des invitations, servies avec un cache d'un an.
  * - private/… : reçus de paiement, lisibles par l'admin seulement.
  */
@@ -50,23 +52,17 @@ export async function storeFile(file: File, kind: MediaKind, folder: string): Pr
   const visibility = kind === "recu" ? "private" : "public";
   const key = `${visibility}/${folder}/${crypto.randomUUID()}.${EXT[mime]}`;
   const env = await getEnv();
-  await env.R2.put(key, bytes, {
-    httpMetadata: {
-      contentType: mime,
-      cacheControl:
-        visibility === "public" ? "public, max-age=31536000, immutable" : "private, no-store",
-    },
-  });
+  await env.FILES.put(key, bytes, { metadata: { contentType: mime } satisfies FileMeta });
   return { key, mimeType: mime, sizeBytes: bytes.byteLength };
 }
 
 export async function deleteFiles(keys: string[]) {
   if (keys.length === 0) return;
   const env = await getEnv();
-  await env.R2.delete(keys);
+  await Promise.all(keys.map((k) => env.FILES.delete(k)));
 }
 
-/** URL publique d'un fichier R2 (servi par /api/media). */
+/** URL publique d'un fichier stocké (servi par /api/media). */
 export const mediaUrl = (key: string) => `/api/media/${key}`;
 
 export class MediaError extends Error {

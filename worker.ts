@@ -18,8 +18,7 @@ export default {
       (async () => {
         const db = drizzle(env.DB, { schema });
         const { invitations, r2Keys } = await purgeExpiredInvitations(db);
-        for (let i = 0; i < r2Keys.length; i += 1000)
-          await env.R2.delete(r2Keys.slice(i, i + 1000));
+        for (const key of r2Keys) await env.FILES.delete(key);
         console.log(`Purge : ${invitations} invitation(s), ${r2Keys.length} fichier(s)`);
       })(),
     );

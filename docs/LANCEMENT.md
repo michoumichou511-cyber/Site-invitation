@@ -6,7 +6,7 @@
 
 - [ ] **Nom de la marque** : « Lou'lou'a » est provisoire. Dire à Claude Code : « Remplace le nom provisoire Lou'lou'a par [NOM] partout » (textes `messages/*.json`, `src/config/site.ts`, e-mails, métadonnées).
 - [ ] **Coordonnées réelles** dans `src/config/site.ts` : numéro WhatsApp, e-mail, Instagram, TikTok, compte CCP, RIP, BaridiMob (aujourd'hui des valeurs d'exemple).
-- [ ] **Comptes et secrets Cloudflare** : suivre `docs/DEPLOIEMENT.md` (D1, R2, Turnstile, Resend, domaine).
+- [ ] **Comptes et secrets Cloudflare** : suivre `docs/DEPLOIEMENT.md` (D1, KV, Turnstile, Resend, domaine).
 - [ ] **Pages légales** : CGV, confidentialité et remboursement sont des brouillons (bandeau « à faire valider »). Les faire relire par un juriste, en particulier sur la loi 18-07 et l'hébergement des données hors d'Algérie, puis retirer le bandeau (`legal.draft` dans `messages/*.json` et `src/app/[locale]/(site)/legal/[page]/page.tsx`).
 - [ ] **Prix des packs** (2 500 / 5 000 / 10 000 DA) : hypothèses du PRD, à confirmer. Ils sont dans `src/lib/orders/pricing.ts` et `messages/*.json` (`packs`).
 - [ ] **Délai « sous 2 h »** pour vérifier les reçus : à confirmer avec votre organisation réelle (`order.thanksText`, `emails.receiptBody`).

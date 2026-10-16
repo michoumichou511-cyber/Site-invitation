@@ -1,10 +1,10 @@
 # Mettre le site en ligne (Cloudflare)
 
-Tout tourne sur l'offre gratuite de Cloudflare : le site et le code serveur (Workers), la base de données (D1), les fichiers (R2), l'anti-robot (Turnstile) et les statistiques (Web Analytics).
+Tout tourne sur l'offre gratuite de Cloudflare : le site et le code serveur (Workers), la base de données (D1), les fichiers (Workers KV), l'anti-robot (Turnstile) et les statistiques (Web Analytics).
 
 ## Le plus simple : Cloudflare relié à GitHub (Workers Builds)
 
-Cloudflare construit et publie le site à chaque push. Sur Cloudflare, `pnpm run build` (`scripts/build.mjs` → `scripts/cf-prepare.mjs`) crée tout seul, au premier déploiement, la base D1, les stockages R2, les tables, les 6 modèles et le secret de connexion.
+Cloudflare construit et publie le site à chaque push. Sur Cloudflare, `pnpm run build` (`scripts/build.mjs` → `scripts/cf-prepare.mjs`) crée tout seul, au premier déploiement, la base D1, le stockage des fichiers (KV), les tables, les 6 modèles et le secret de connexion.
 
 1. Tableau de bord Cloudflare → **Workers & Pages** → **Create** → onglet **Workers** → **Import a repository** → choisir `Site-invitation`. (Pas « Pages » : le site a besoin d'un Worker.)
 2. Réglages du projet :
@@ -17,7 +17,7 @@ Cloudflare construit et publie le site à chaque push. Sur Cloudflare, `pnpm run
 4. Créer le premier compte admin depuis votre ordinateur (une seule fois) :
    `npx wrangler login` puis `pnpm admin:create -- vous@exemple.com "mot de passe de 12 caractères ou plus" "Votre nom" --remote`.
 
-Si le déploiement échoue sur la base ou les stockages (« permission »), donner au jeton de build les droits **D1 : Edit** et **Workers R2 Storage : Edit** (Settings → Builds → API token).
+Si le déploiement échoue sur la base ou les stockages (« permission »), donner au jeton de build les droits **D1 : Edit** et **Workers KV Storage : Edit** (Settings → Builds → API token).
 
 Ensuite, les sections ci-dessous servent à compléter : e-mails (Resend), Turnstile, domaine, Sentry. Sans elles, le site fonctionne déjà : les e-mails ne partent pas (les liens de connexion restent disponibles dans l'admin pour WhatsApp) et l'anti-robot est en mode test.
 
@@ -43,7 +43,7 @@ pnpm dev                          # http://localhost:3000
 npx wrangler login
 ```
 
-La base D1 et les stockages R2 sont créés par `pnpm deploy` (étape 4). Pour travailler ensuite depuis votre ordinateur sur la base en ligne, copier dans `wrangler.jsonc` le `database_id` affiché pendant le déploiement.
+La base D1 et le stockage KV sont créés par `pnpm deploy` (étape 4). Pour travailler ensuite depuis votre ordinateur sur la base en ligne, copier dans `wrangler.jsonc` le `database_id` affiché pendant le déploiement.
 
 ## 3. Secrets de production
 
@@ -69,7 +69,7 @@ Dans `src/config/site.ts` : vrai numéro WhatsApp, e-mail, Instagram, TikTok, et
 ## 4. Base de données en ligne et premier déploiement
 
 ```bash
-pnpm deploy                   # crée D1 et R2 si besoin, tables, 6 modèles, publication
+pnpm deploy                   # crée D1 et KV si besoin, tables, 6 modèles, publication
 pnpm admin:create -- vous@exemple.com "mot de passe" "Votre nom" --remote
 ```
 
@@ -111,7 +111,7 @@ npx wrangler d1 export louloua-db --remote --output=sauvegarde-$(date +%F).sql
 | Requêtes Workers | 100 000 / jour | chaque ouverture d'invitation = 1 requête + fichiers statiques (gratuits) |
 | Écritures D1 | 100 000 / jour | un RSVP = 1 écriture ; une ouverture = 1 à 2 (compteurs de vues) ; un import de 300 invités = 300 |
 | Lectures D1 | 5 millions / jour | large |
-| R2 | 10 Go | photos WebP ≈ 200 Ko, musiques < 3 Mo |
+| KV (fichiers) | 1 Go, 1 000 écritures / jour | photos WebP ≈ 200 Ko, musiques < 3 Mo (≈ 5 000 photos). Au-delà : passer sur R2 (10 Go gratuits, à activer dans le tableau de bord) |
 
 Si un jour une limite est dépassée, l'offre Workers Paid coûte 5 $/mois.
 

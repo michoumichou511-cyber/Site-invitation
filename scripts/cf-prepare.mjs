@@ -1,7 +1,7 @@
 /**
  * Préparation Cloudflare (idempotente) avant la publication :
- *   1. crée la base D1 « louloua-db » et les stockages R2 s'ils n'existent pas ;
- *   2. écrit l'identifiant de la base dans wrangler.jsonc (copie de travail) ;
+ *   1. crée la base D1 « louloua-db » et le stockage de fichiers (KV) s'ils n'existent pas ;
+ *   2. écrit leurs identifiants dans wrangler.jsonc (copie de travail) ;
  *   3. applique les migrations et les 6 modèles du catalogue ;
  *   4. crée BETTER_AUTH_SECRET s'il manque (connexion admin et clients).
  * Lancé automatiquement par `pnpm build` dans Cloudflare Workers Builds, et par `pnpm cf:deploy`.
@@ -12,7 +12,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 
 const DB = "louloua-db";
 const WORKER = "louloua";
-const BUCKETS = ["louloua-files", "louloua-opennext-cache"];
+const KV_TITLE = "louloua-files";
 const env = { ...process.env, CI: "1", WRANGLER_SEND_METRICS: "false" };
 
 const wrangler = (args, opts = {}) =>
@@ -38,20 +38,21 @@ export function prepare() {
   const patched = config.replace(/("database_id":\s*")[^"]*(")/, `$1${db.uuid}$2`);
   if (patched !== config) writeFileSync("wrangler.jsonc", patched);
 
-  step("Stockages R2");
-  for (const bucket of BUCKETS) {
-    try {
-      wrangler(["r2", "bucket", "create", bucket]);
-      console.log(`  créé : ${bucket}`);
-    } catch (e) {
-      const out = `${e.stdout ?? ""}${e.stderr ?? ""}`;
-      if (!/already exists|10004/i.test(out)) {
-        console.error(out);
-        throw e;
-      }
-      console.log(`  existe : ${bucket}`);
-    }
+  step("Stockage des fichiers (Workers KV)");
+  const findKv = () =>
+    JSON.parse(wrangler(["kv", "namespace", "list"])).find((n) => n.title === KV_TITLE);
+  let kv = findKv();
+  if (!kv) {
+    wrangler(["kv", "namespace", "create", KV_TITLE], { inherit: true });
+    kv = findKv();
   }
+  if (!kv?.id) throw new Error(`Impossible de trouver ou créer le stockage ${KV_TITLE}`);
+  console.log(`  id : ${kv.id}`);
+  const withKv = readFileSync("wrangler.jsonc", "utf8").replace(
+    /("binding":\s*"FILES",\s*"id":\s*")[^"]*(")/,
+    `$1${kv.id}$2`,
+  );
+  writeFileSync("wrangler.jsonc", withKv);
 
   step("Migrations D1");
   wrangler(["d1", "migrations", "apply", DB, "--remote"], { inherit: true });

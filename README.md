@@ -13,4 +13,4 @@ pnpm db:migrate:local && pnpm db:seed:local
 pnpm dev   # http://localhost:3000/fr · démo : /i/demo-karakou
 ```
 
-Stack : Next.js 16 + TypeScript sur Cloudflare Workers (OpenNext), D1 + Drizzle, R2, Better Auth, next-intl, Tailwind, GSAP, Lenis, React Three Fiber.
+Stack : Next.js 16 + TypeScript sur Cloudflare Workers (OpenNext), D1 + Drizzle, Workers KV (fichiers), Better Auth, next-intl, Tailwind, GSAP, Lenis, React Three Fiber.

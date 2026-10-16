@@ -1,6 +1,6 @@
 /**
  * `pnpm build` :
- * - sur Cloudflare Workers Builds (WORKERS_CI=1) : prépare D1/R2/tables/secret puis construit
+ * - sur Cloudflare Workers Builds (WORKERS_CI=1) : prépare D1/KV/tables/secret puis construit
  *   le Worker OpenNext ; la commande de déploiement par défaut (`npx wrangler deploy`) publie ensuite ;
  * - ailleurs (ordinateur, CI GitHub) : simple `next build`.
  */

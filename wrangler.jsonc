@@ -13,17 +13,14 @@
     {
       "binding": "DB",
       "database_name": "louloua-db",
-      // Remplacer par l'identifiant donné par `wrangler d1 create louloua-db`.
+      // Écrit automatiquement par scripts/cf-prepare.mjs au déploiement.
       "database_id": "00000000-0000-0000-0000-000000000000",
       "migrations_dir": "drizzle",
     },
   ],
-  "r2_buckets": [
-    // Photos, musiques, reçus.
-    { "binding": "R2", "bucket_name": "louloua-files" },
-    // Cache des pages Next.js (voir https://opennext.js.org/cloudflare/caching).
-    { "binding": "NEXT_INC_CACHE_R2_BUCKET", "bucket_name": "louloua-opennext-cache" },
-  ],
+  // Fichiers (photos, musiques, reçus) : Workers KV, inclus dans l'offre gratuite sans carte.
+  // L'identifiant est écrit automatiquement par scripts/cf-prepare.mjs au déploiement.
+  "kv_namespaces": [{ "binding": "FILES", "id": "00000000000000000000000000000000" }],
   // Limites de requêtes (gratuites) : RSVP 10/min/IP, formulaires 20/min/IP et par action.
   "ratelimits": [
     { "name": "RSVP_LIMITER", "namespace_id": "1001", "simple": { "limit": 10, "period": 60 } },

@@ -38,7 +38,7 @@ export const baseConfigSchema = z.object({
     .array(z.object({ src: z.string().max(300), alt: i18nText(120) }))
     .max(12)
     .default([]),
-  /** MP3 choisi (URL publique R2) ; null = mélodie générée ; "none" = sans musique. */
+  /** MP3 choisi (URL publique /api/media) ; null = mélodie générée ; "none" = sans musique. */
   music: z
     .union([z.object({ src: z.string().max(300) }), z.literal("none")])
     .nullable()

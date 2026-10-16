@@ -1,5 +1,5 @@
 /**
- * Déploiement à la main : préparation (D1, R2, tables, modèles, secret) + build + publication.
+ * Déploiement à la main : préparation (D1, KV, tables, modèles, secret) + build + publication.
  *   pnpm cf:deploy   (après `npx wrangler login`)
  */
 import { execFileSync } from "node:child_process";

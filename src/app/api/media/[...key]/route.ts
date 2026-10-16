@@ -1,7 +1,8 @@
 import { getEnv } from "@/db";
 import { getViewer } from "@/lib/auth/viewer";
+import type { FileMeta } from "@/lib/media";
 
-/** Sert les fichiers R2. public/… à tous (cache 1 an) ; private/… aux admins seulement. */
+/** Sert les fichiers stockés (KV). public/… à tous (cache 1 an) ; private/… aux admins seulement. */
 export async function GET(_req: Request, ctx: RouteContext<"/api/media/[...key]">) {
   const { key: parts } = await ctx.params;
   const key = parts.join("/");
@@ -13,12 +14,15 @@ export async function GET(_req: Request, ctx: RouteContext<"/api/media/[...key]"
     if (viewer?.role !== "admin") return new Response("Forbidden", { status: 403 });
   }
   const env = await getEnv();
-  const object = await env.R2.get(key);
-  if (!object) return new Response("Not found", { status: 404 });
-  const headers = new Headers();
-  object.writeHttpMetadata(headers);
-  headers.set("ETag", object.httpEtag);
-  headers.set("X-Content-Type-Options", "nosniff");
-  if (key.startsWith("private/")) headers.set("Cache-Control", "private, no-store");
-  return new Response(object.body, { headers });
+  const { value, metadata } = await env.FILES.getWithMetadata<FileMeta>(key, "arrayBuffer");
+  if (!value) return new Response("Not found", { status: 404 });
+  const headers = new Headers({
+    "Content-Type": metadata?.contentType ?? "application/octet-stream",
+    "X-Content-Type-Options": "nosniff",
+    // Nom de fichier unique à chaque envoi : cache d'un an pour les fichiers publics.
+    "Cache-Control": key.startsWith("private/")
+      ? "private, no-store"
+      : "public, max-age=31536000, immutable",
+  });
+  return new Response(value, { headers });
 }

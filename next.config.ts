@@ -29,7 +29,7 @@ const nextConfig: NextConfig = {
 
 export default withNextIntl(nextConfig);
 
-// Donne accès aux bindings Cloudflare (D1, R2) pendant `next dev`.
+// Donne accès aux bindings Cloudflare (D1, KV) pendant `next dev`.
 if (process.env.NODE_ENV === "development") {
   void initOpenNextCloudflareForDev();
 }

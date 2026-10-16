@@ -9,7 +9,7 @@ type AnyDb = BaseSQLiteDatabase<"sync" | "async", any, any>;
  * Rétention (BACKEND_SCHEMA) : 6 mois après l'événement (`invitations.expires_at`), on
  * supprime invités, réponses, entrées, vœux, photos et musiques de l'invitation.
  * Commandes, paiements et avis restent pour la comptabilité. Idempotent.
- * Renvoie les clés R2 à supprimer.
+ * Renvoie les clés des fichiers (KV) à supprimer.
  */
 export async function purgeExpiredInvitations(db: AnyDb, now = Date.now()) {
   const expired = await db

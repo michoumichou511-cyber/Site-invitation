@@ -163,7 +163,7 @@ export async function addInvitationPhoto(form: FormData) {
   }
 }
 
-/** Client : retire une photo de la galerie (et le fichier R2). */
+/** Client : retire une photo de la galerie (et le fichier stocké). */
 export async function removeInvitationPhoto(invitationId: string, src: string) {
   const owned = await getOwnedInvitation(z.uuid().parse(invitationId));
   if (!owned) return { ok: false as const };

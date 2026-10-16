@@ -18,7 +18,7 @@ Prototypes de référence : design/references/hero-3d.html, invitation-envelope.
 Next.js (App Router) + TypeScript strict, déployé sur Cloudflare Workers via
 @opennextjs/cloudflare. Tailwind, shadcn/ui (admin), GSAP + ScrollTrigger + SplitText,
 Lenis, React Three Fiber (héro + Prestige uniquement), next-intl (fr, ar).
-Cloudflare D1 + Drizzle (schéma : src/db/schema.ts), R2 (fichiers), Better Auth,
+Cloudflare D1 + Drizzle (schéma : src/db/schema.ts), Workers KV (fichiers, binding FILES), Better Auth,
 Turnstile, Cron Triggers, zod.
 
 ## Commandes
@@ -38,7 +38,7 @@ Turnstile, Cron Triggers, zod.
   client (/compte) · src/app/[locale]/(admin)/admin/ : back-office · src/app/i/ : invitations
 - src/invitation/ : moteur (engine/), ouvertures (openers/), sections/, themes/<slug>/,
   server/ (chargement D1, rendu) · src/actions/ : Server Actions (public, client/, admin/)
-- src/lib/ : auth (garde admin + 2FA, accès client), commandes, invités, médias R2, sécurité
+- src/lib/ : auth (garde admin + 2FA, accès client), commandes, invités, médias (KV), sécurité
 - worker.ts : entrée Cloudflare (site OpenNext + Cron de purge) ; logique dans src/lib/purge.ts
 
 ## Pièges déjà rencontrés
