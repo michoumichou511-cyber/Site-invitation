@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { onIdle } from "@/lib/idle";
+import { onFirstInteraction } from "@/lib/idle";
 
 /**
  * Défilement fluide Lenis, chargé après l'affichage et seulement si
@@ -30,7 +30,7 @@ export function SmoothScroll() {
         lenis.destroy();
       };
     };
-    const cancelIdle = onIdle(() => void start());
+    const cancelIdle = onFirstInteraction(() => void start());
     return () => {
       cancelled = true;
       cancelIdle();

@@ -8,6 +8,7 @@ test.describe("invitation démo Karakou", () => {
     await page.goto("/i/demo-karakou");
     await expect(page.locator("meta[name=robots]")).toHaveAttribute("content", /noindex/);
     await page.getByRole("button", { name: OPEN }).click();
+    await expect(page.locator(".env-intro")).toBeHidden({ timeout: 5000 });
     await expect(page.getByRole("heading", { level: 1 })).toContainText("Amine");
     await expect(page.getByText(/Hégire/)).toBeVisible();
     await expect(page.getByRole("button", { name: "Couper le son" })).toBeVisible();

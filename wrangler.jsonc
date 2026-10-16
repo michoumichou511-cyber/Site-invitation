@@ -1,7 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "louloua",
-  "main": ".open-next/worker.js",
+  "main": "worker.ts",
   "compatibility_date": "2026-09-01",
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
   "assets": {
@@ -33,6 +33,10 @@
     "PUBLIC_SITE_URL": "http://localhost:3000",
     // Clé publique Turnstile (clé de test « toujours OK » en local, à remplacer en production).
     "TURNSTILE_SITE_KEY": "1x00000000000000000000AA",
+    // Jeton Cloudflare Web Analytics (vide = désactivé).
+    "PUBLIC_CF_BEACON_TOKEN": "",
   },
+  // Purge des données invités expirées, chaque nuit à 3 h (heure d'Alger).
+  "triggers": { "crons": ["0 2 * * *"] },
   "observability": { "enabled": true },
 }

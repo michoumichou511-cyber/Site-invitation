@@ -11,6 +11,8 @@ for (const slug of THEMES) {
       await page.goto(`/i/demo-${slug}?lang=${lang}`);
       await expect(page.locator(".inv")).toHaveAttribute("dir", lang === "ar" ? "rtl" : "ltr");
       await page.getByRole("button", { name: OPEN }).click();
+      // L'écran d'ouverture disparaît vraiment (il ne doit plus couvrir l'invitation).
+      await expect(page.locator(".env-intro")).toBeHidden({ timeout: 5000 });
       await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
       await expect(page.getByRole("timer")).toBeVisible();
       await expect(page.locator("#rsvp form")).toBeAttached();
@@ -25,7 +27,8 @@ test("anniversaire Ciel : on souffle la bougie", async ({ page }) => {
   await page.goto("/i/demo-ciel");
   await page.getByRole("button", { name: OPEN }).click();
   const candle = page.getByRole("button", { name: "Touchez la flamme pour souffler la bougie" });
-  await candle.scrollIntoViewIfNeeded();
+  // Au centre de l'écran : la barre « Je confirme » est collée en bas.
+  await candle.evaluate((el) => el.scrollIntoView({ block: "center" }));
   await candle.click();
   await expect(page.getByText("Vœu envoyé ! Joyeux anniversaire !")).toBeVisible();
 });

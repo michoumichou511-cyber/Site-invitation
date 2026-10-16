@@ -11,7 +11,7 @@ export function Candle({ t, onBlow }: SectionProps & { onBlow: () => void }) {
       <h2 id="h-candle">{t("candleTitle")}</h2>
       <button
         type="button"
-        className={`candle${out ? "is-out" : ""}`}
+        className={`candle ${out ? "is-out" : ""}`}
         aria-pressed={out}
         aria-label={out ? t("candleDone") : t("candleBlow")}
         onClick={() => {

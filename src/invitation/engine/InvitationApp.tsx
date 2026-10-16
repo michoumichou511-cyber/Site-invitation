@@ -188,7 +188,7 @@ export function InvitationApp({
       </main>
 
       {rsvpVisible && opened && (
-        <div className={`inv-cta${ctaHidden ? "is-hidden" : ""}`}>
+        <div className={`inv-cta ${ctaHidden ? "is-hidden" : ""}`}>
           <a className="inv-btn is-solid" href="#rsvp">
             {t("rsvpCta")}
           </a>

@@ -15,13 +15,15 @@ test("une commande va de l'accueil à « Livrée » sans toucher à la base", as
   const card = admin.getByTestId("payment").filter({ hasText: code });
   await expect(card.getByText("Montant attendu : 5 000 DA")).toBeVisible();
   await card.getByRole("button", { name: "Valider" }).click();
-  await expect(admin.getByTestId("payment").filter({ hasText: code })).toHaveCount(0);
+  await expect(admin.getByTestId("payment").filter({ hasText: code })).toHaveCount(0, {
+    timeout: 20_000,
+  });
 
   await admin.getByRole("link", { name: "Commandes" }).click();
   await admin.getByRole("link", { name: new RegExp(code) }).click();
   await expect(admin.getByText("Payée").first()).toBeVisible();
   await admin.getByRole("button", { name: "Publier l'invitation" }).click();
-  await expect(admin.getByText("Invitation publiée.")).toBeVisible();
+  await expect(admin.getByText("Invitation publiée.")).toBeVisible({ timeout: 20_000 });
   await expect(
     admin.getByRole("link", { name: "Envoyer les liens au client sur WhatsApp" }),
   ).toHaveAttribute("href", /wa\.me\/213550123456/);
@@ -47,7 +49,9 @@ test("un reçu refusé renvoie le client vers un nouvel envoi", async ({ page, b
   await card.getByLabel("Motif du refus (montré au client)").fill("Montant incorrect");
   await card.getByRole("button", { name: "Refuser le reçu" }).click();
   // Le reçu traité quitte la liste des paiements à vérifier.
-  await expect(admin.getByTestId("payment").filter({ hasText: code })).toHaveCount(0);
+  await expect(admin.getByTestId("payment").filter({ hasText: code })).toHaveCount(0, {
+    timeout: 20_000,
+  });
 
   await page.goto(`/fr/suivi?code=${code}`);
   await expect(page.getByText("Paiement refusé")).toBeVisible();

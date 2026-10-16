@@ -2,7 +2,9 @@ import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
+import { ErrorReporter, WebAnalytics } from "@/components/site/Monitoring";
 import { getEnv } from "@/db";
+import { analyticsToken } from "@/lib/analytics";
 import { localeDir, routing } from "@/i18n/routing";
 import { marcellus, reemKufi, tajawal } from "../fonts";
 import "../globals.css";
@@ -13,7 +15,8 @@ export function generateStaticParams() {
 
 export const dynamicParams = false;
 
-const CLIENT_NAMESPACES = ["common", "order", "events", "account", "admin"];
+// Textes client communs ; chaque section ajoute les siens (ClientMessages).
+const CLIENT_NAMESPACES = ["common"];
 
 export const viewport: Viewport = {
   themeColor: "#EDEAE4",
@@ -56,6 +59,8 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
       <body className="min-h-dvh antialiased">
         <NextIntlClientProvider locale={locale} messages={clientMessages}>
           {children}
+          <ErrorReporter />
+          <WebAnalytics token={await analyticsToken()} />
         </NextIntlClientProvider>
       </body>
     </html>

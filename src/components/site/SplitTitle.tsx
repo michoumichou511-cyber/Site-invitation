@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { onFirstInteraction } from "@/lib/idle";
 
 /**
  * Titre révélé mot par mot (GSAP SplitText + ScrollTrigger), chargé à la demande.
@@ -22,7 +23,7 @@ export function SplitTitle({
     if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     let revert: (() => void) | undefined;
     let cancelled = false;
-    void (async () => {
+    const run = async () => {
       const [{ gsap }, { ScrollTrigger }, { SplitText }] = await Promise.all([
         import("gsap"),
         import("gsap/ScrollTrigger"),
@@ -42,9 +43,13 @@ export function SplitTitle({
         });
       });
       revert = () => ctx.revert();
-    })();
+    };
+    // Titre déjà à l'écran au chargement : pas d'animation (il reste lisible tel quel).
+    if (ref.current && ref.current.getBoundingClientRect().top < innerHeight) return;
+    const cancelStart = onFirstInteraction(() => void run());
     return () => {
       cancelled = true;
+      cancelStart();
       revert?.();
     };
   }, []);

@@ -49,7 +49,7 @@ export function Envelope({
 
   return (
     <section
-      className={`env-intro${gone ? "is-gone" : ""}`}
+      className={`env-intro ${gone ? "is-gone" : ""}`}
       aria-label={t("closedLabel")}
       aria-hidden={gone}
       onPointerDown={(e) => (startY.current = e.clientY)}
@@ -60,7 +60,7 @@ export function Envelope({
     >
       <p className="env-greet">{greeting}</p>
       <div className="env-stage">
-        <div className={`env${open ? "is-open" : ""}`} onClick={trigger}>
+        <div className={`env ${open ? "is-open" : ""}`} onClick={trigger}>
           <div className="env-back env-paper" />
           <div className="env-card env-paper">
             <span>{cardText}</span>

@@ -14,14 +14,14 @@ export function Doors(props: OpenerProps) {
   useEffect(() => knocker.current?.focus({ preventScroll: true }), []);
   return (
     <section
-      className={`env-intro doors-intro${gone ? "is-gone" : ""}`}
+      className={`env-intro doors-intro ${gone ? "is-gone" : ""}`}
       aria-label={t("closedLabel")}
       aria-hidden={gone}
       {...swipe}
     >
       <p className="env-greet">{greeting}</p>
       <div className="doors-stage">
-        <div className={`doors${open ? "is-open" : ""}`} onClick={trigger}>
+        <div className={`doors ${open ? "is-open" : ""}`} onClick={trigger}>
           <div className="doors-inside">
             <span>{cardText}</span>
           </div>

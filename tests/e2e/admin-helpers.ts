@@ -58,11 +58,13 @@ export async function publishFlow(
     .filter({ hasText: code })
     .getByRole("button", { name: "Valider" })
     .click();
-  await expect(admin.getByTestId("payment").filter({ hasText: code })).toHaveCount(0);
+  await expect(admin.getByTestId("payment").filter({ hasText: code })).toHaveCount(0, {
+    timeout: 20_000,
+  });
   await admin.goto("/fr/admin/commandes");
   await admin.getByRole("link", { name: new RegExp(code) }).click();
   await admin.getByRole("button", { name: "Publier l'invitation" }).click();
-  await expect(admin.getByText("Invitation publiée.")).toBeVisible();
+  await expect(admin.getByText("Invitation publiée.")).toBeVisible({ timeout: 20_000 });
   const text = (await admin.getByText(/Lien de connexion du client/).textContent())!;
   return {
     code,

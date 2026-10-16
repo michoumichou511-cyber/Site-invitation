@@ -40,3 +40,31 @@ test("suivi : code inconnu", async ({ page }) => {
   await page.goto("/fr/suivi?code=LLA-AAAAAA");
   await expect(page.getByText("Aucune commande avec ce code.")).toBeVisible();
 });
+
+test("commande en arabe : assistant en droite-à-gauche jusqu'au code de suivi", async ({
+  page,
+}) => {
+  await page.goto("/ar/commander?modele=casbah");
+  await page.evaluate(() => localStorage.clear());
+  await page.reload();
+  await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
+  await page.getByText("عرس", { exact: true }).click();
+  await page.getByRole("button", { name: "التالي" }).click();
+  await page.getByRole("group", { name: "الاسم الأول" }).getByLabel("بالعربية").fill("مهدي");
+  await page.getByRole("group", { name: "الاسم الثاني" }).getByLabel("بالعربية").fill("ياسمين");
+  await page.getByRole("button", { name: "التالي" }).click();
+  await page.getByLabel("القاعة أو المكان").fill("قاعة القصر");
+  await expect(page.getByText(/هجري:/)).toBeVisible();
+  for (let i = 0; i < 3; i++) await page.getByRole("button", { name: "التالي" }).click();
+  await page.getByRole("button", { name: "شاهد المعاينة" }).click();
+  await page.getByRole("button", { name: "افتح الدعوة" }).click();
+  await expect(page.getByRole("heading", { level: 1, name: /مهدي/ })).toBeVisible();
+  await expect(page.locator(".inv-watermark")).toHaveText("معاينة");
+  await page.getByRole("link", { name: "اختر باقتي" }).click();
+  await page.getByLabel("الاسم", { exact: true }).fill("ياسمين");
+  await page.getByLabel("رقم واتساب").fill("0661123456");
+  await page.getByLabel(/أوافق على شروط البيع/).check();
+  await page.getByRole("button", { name: "تأكيد الطلب" }).click();
+  await expect(page).toHaveURL(/\/ar\/commander\/paiement\?code=LLA-/, { timeout: 15_000 });
+  await expect(page.getByRole("heading", { name: "الدفع" })).toBeVisible();
+});

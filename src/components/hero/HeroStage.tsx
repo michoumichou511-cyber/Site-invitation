@@ -5,7 +5,7 @@
 
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
-import { onIdle } from "@/lib/idle";
+import { onFirstInteraction } from "@/lib/idle";
 import { KarakouScreen } from "./KarakouScreen";
 import { drawScreen, SCREEN_H, SCREEN_W } from "./screens";
 import type { PhoneState } from "./PhoneScene";
@@ -105,17 +105,7 @@ export function HeroStage({ copy }: { copy: HeroCopy }) {
     setScreen(c);
     // La 3D attend le premier geste (défilement, toucher, clavier) : la page reste
     // légère au chargement. Sans geste, l'aperçu statique suffit.
-    const events = ["scroll", "pointerdown", "keydown", "wheel", "touchstart"] as const;
-    let cancelIdle: (() => void) | undefined;
-    const start = () => {
-      events.forEach((e) => removeEventListener(e, start));
-      cancelIdle = onIdle(() => setMode(canRun3D() ? "3d" : "canvas"), 800);
-    };
-    events.forEach((e) => addEventListener(e, start, { passive: true, once: true }));
-    return () => {
-      events.forEach((e) => removeEventListener(e, start));
-      cancelIdle?.();
-    };
+    return onFirstInteraction(() => setMode(canRun3D() ? "3d" : "canvas"));
   }, []);
 
   useEffect(() => {
@@ -157,7 +147,8 @@ export function HeroStage({ copy }: { copy: HeroCopy }) {
     if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     let kill: (() => void) | undefined;
     let cancelled = false;
-    void (async () => {
+    // Chargé au premier geste : le téléphone ne bouge qu'au défilement de toute façon.
+    const cancelStart = onFirstInteraction(async () => {
       const [{ gsap }, { ScrollTrigger }] = await Promise.all([
         import("gsap"),
         import("gsap/ScrollTrigger"),
@@ -194,9 +185,11 @@ export function HeroStage({ copy }: { copy: HeroCopy }) {
         });
       }, stage);
       kill = () => ctx.revert();
-    })();
+      ScrollTrigger.refresh();
+    });
     return () => {
       cancelled = true;
+      cancelStart();
       kill?.();
     };
   }, [copy.lang]);

@@ -13,13 +13,13 @@ export function Gift(props: OpenerProps) {
   useEffect(() => button.current?.focus({ preventScroll: true }), []);
   return (
     <section
-      className={`env-intro gift-intro${gone ? "is-gone" : ""}`}
+      className={`env-intro gift-intro ${gone ? "is-gone" : ""}`}
       aria-label={t("closedLabel")}
       aria-hidden={gone}
       {...swipe}
     >
       <p className="env-greet">{greeting}</p>
-      <div className={`gift${open ? "is-open" : ""}`}>
+      <div className={`gift ${open ? "is-open" : ""}`}>
         {open && (
           <div className="gift-balloons" aria-hidden="true">
             {BALLOONS.map((c, i) => (
