@@ -21,6 +21,9 @@ for (const locale of ["fr", "ar"] as const) {
       expect(res?.status(), path).toBe(200);
       await expect(page.locator("html")).toHaveAttribute("dir", locale === "ar" ? "rtl" : "ltr");
       await expect(page.locator("h1").first()).toBeVisible();
+      // Le titre est bien dans la langue de l'URL.
+      const h1 = (await page.locator("h1").first().textContent()) ?? "";
+      expect(/[\u0600-\u06FF]/.test(h1), `${path} : ${h1}`).toBe(locale === "ar");
       // Aucun défilement horizontal à 375 px.
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
       expect(overflow, path).toBeLessThanOrEqual(0);

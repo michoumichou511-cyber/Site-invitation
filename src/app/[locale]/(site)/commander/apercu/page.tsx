@@ -2,7 +2,7 @@ import { setRequestLocale } from "next-intl/server";
 import { use } from "react";
 import { PreviewClient } from "@/components/order/PreviewClient";
 import { invitationDicts } from "@/invitation/server/page";
-import { arefRuqaa, pinyonScript } from "../../../fonts";
+import { arefRuqaa, pinyonScript } from "@/app/fonts";
 import "@/invitation/invitation.css";
 
 export const metadata = { robots: { index: false } };

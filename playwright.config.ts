@@ -4,7 +4,9 @@ const PORT = Number(process.env.PORT ?? 3100);
 
 export default defineConfig({
   testDir: "tests/e2e",
+  globalSetup: "./tests/e2e/global-setup.ts",
   fullyParallel: true,
+  timeout: 60_000,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
   reporter: process.env.CI ? "github" : "list",

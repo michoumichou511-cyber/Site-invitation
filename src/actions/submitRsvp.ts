@@ -28,7 +28,9 @@ export async function submitRsvp(raw: z.input<typeof input>): Promise<RsvpResult
   if (!parsed.success) return { ok: false, error: "invalid" };
   const data = parsed.data;
 
-  if (!(await rateLimit("RSVP_LIMITER"))) return { ok: false, error: "rate" };
+  // Par invitation et par IP : en Algérie, beaucoup d'invités partagent l'IP de leur opérateur.
+  if (!(await rateLimit("RSVP_LIMITER", `${data.slug}:${data.code ?? "lien"}`)))
+    return { ok: false, error: "rate" };
 
   const inv = await loadInvitation(data.slug);
   if (!inv || inv.expired) return { ok: false, error: "notfound" };

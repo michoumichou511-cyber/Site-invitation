@@ -26,7 +26,7 @@ export async function submitWish(raw: z.input<typeof input>): Promise<WishResult
   if (!parsed.success) return { ok: false, error: "invalid" };
   const data = parsed.data;
 
-  if (!(await rateLimit("FORM_LIMITER"))) return { ok: false, error: "rate" };
+  if (!(await rateLimit("FORM_LIMITER", "wish"))) return { ok: false, error: "rate" };
   if (!(await verifyTurnstile(data.turnstileToken))) return { ok: false, error: "captcha" };
 
   const inv = await loadInvitation(data.slug);

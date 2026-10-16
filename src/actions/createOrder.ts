@@ -30,7 +30,7 @@ export type CreateOrderResult =
  * turnstile, photo-0..2 (WebP), music (MP3 facultatif).
  */
 export async function createOrder(form: FormData): Promise<CreateOrderResult> {
-  if (!(await rateLimit("FORM_LIMITER"))) return { ok: false, error: "rate" };
+  if (!(await rateLimit("FORM_LIMITER", "order"))) return { ok: false, error: "rate" };
   if (!(await verifyTurnstile(form.get("turnstile") as string | null)))
     return { ok: false, error: "captcha" };
 
@@ -136,15 +136,13 @@ export async function createOrder(form: FormData): Promise<CreateOrderResult> {
       }),
       db.insert(events).values(eventRows),
       ...stored.map((s) =>
-        db
-          .insert(media)
-          .values({
-            invitationId,
-            kind: s.kind,
-            r2Key: s.key,
-            mimeType: s.mimeType,
-            sizeBytes: s.sizeBytes,
-          }),
+        db.insert(media).values({
+          invitationId,
+          kind: s.kind,
+          r2Key: s.key,
+          mimeType: s.mimeType,
+          sizeBytes: s.sizeBytes,
+        }),
       ),
     ]);
 

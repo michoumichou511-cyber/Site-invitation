@@ -26,7 +26,7 @@ export type TrackedOrder = {
 export async function trackOrder(rawCode: string): Promise<TrackedOrder | null> {
   const code = rawCode.trim().toUpperCase();
   if (!TRACKING_RE.test(code)) return null;
-  if (!(await rateLimit("FORM_LIMITER"))) return null;
+  if (!(await rateLimit("FORM_LIMITER", "track"))) return null;
   const db = await getDb();
   const found = await findOrderByTracking(db, code);
   if (!found) return null;

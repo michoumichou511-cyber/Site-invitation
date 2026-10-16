@@ -15,7 +15,7 @@ export type UploadReceiptResult =
 
 /** Visiteur : envoie le reçu BaridiMob / CCP de sa commande (accès par le code de suivi). */
 export async function uploadReceipt(form: FormData): Promise<UploadReceiptResult> {
-  if (!(await rateLimit("FORM_LIMITER"))) return { ok: false, error: "rate" };
+  if (!(await rateLimit("FORM_LIMITER", "receipt"))) return { ok: false, error: "rate" };
   if (!(await verifyTurnstile(form.get("turnstile") as string | null)))
     return { ok: false, error: "captcha" };
   const code = String(form.get("code") ?? "")
@@ -44,14 +44,12 @@ export async function uploadReceipt(form: FormData): Promise<UploadReceiptResult
         amountDa: order.amountDa - order.discountDa,
         receiptKey: stored.key,
       }),
-      db
-        .insert(media)
-        .values({
-          kind: "recu",
-          r2Key: stored.key,
-          mimeType: stored.mimeType,
-          sizeBytes: stored.sizeBytes,
-        }),
+      db.insert(media).values({
+        kind: "recu",
+        r2Key: stored.key,
+        mimeType: stored.mimeType,
+        sizeBytes: stored.sizeBytes,
+      }),
       db.update(orders).set({ status: "paiement_en_attente" }).where(eq(orders.id, order.id)),
     ]);
   } catch (e) {

@@ -8,7 +8,22 @@ import { getDb, getEnv, schema } from "@/db";
 import { sendEmail } from "@/lib/email";
 import { authOptions } from "./options";
 
+/**
+ * Derniers liens magiques générés (par e-mail), pour que l'admin puisse aussi les
+ * transmettre sur WhatsApp. Les adresses « …@whatsapp.invalid » (clients sans e-mail)
+ * ne reçoivent jamais d'e-mail.
+ */
+const lastLinks = new Map<string, string>();
+export const takeMagicLink = (email: string) => {
+  const url = lastLinks.get(email);
+  lastLinks.delete(email);
+  return url ?? null;
+};
+export const NO_EMAIL_DOMAIN = "@whatsapp.invalid";
+
 async function sendMagicLink({ email, url }: { email: string; url: string }) {
+  lastLinks.set(email, url);
+  if (email.endsWith(NO_EMAIL_DOMAIN)) return;
   await sendEmail({
     to: email,
     subject: "Votre lien de connexion · رابط الدخول",
@@ -25,6 +40,12 @@ export const getAuth = cache(async () => {
     ...options,
     secret: env.BETTER_AUTH_SECRET,
     baseURL: env.BETTER_AUTH_URL,
+    trustedOrigins: [
+      env.BETTER_AUTH_URL,
+      env.PUBLIC_SITE_URL,
+      // Développement et tests : n'importe quel port local.
+      ...(env.BETTER_AUTH_URL.startsWith("http://localhost") ? ["http://localhost:*"] : []),
+    ],
     database: drizzleAdapter(db, { provider: "sqlite", schema }),
     plugins: [...options.plugins, nextCookies()],
   });

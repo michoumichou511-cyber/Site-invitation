@@ -12,7 +12,7 @@ const input = z.object({ slug: z.string().min(3).max(80), code: z.string().trim(
 export async function verifyAccessCode(raw: z.input<typeof input>) {
   const parsed = input.safeParse(raw);
   if (!parsed.success) return { ok: false as const };
-  if (!(await rateLimit("FORM_LIMITER"))) return { ok: false as const };
+  if (!(await rateLimit("FORM_LIMITER", "access"))) return { ok: false as const };
   const inv = await loadInvitation(parsed.data.slug);
   if (!inv?.accessCodeHash) return { ok: false as const };
   const hash = await hashAccessCode(inv.slug, parsed.data.code);

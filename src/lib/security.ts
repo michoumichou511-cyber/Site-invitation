@@ -11,11 +11,12 @@ export async function clientIp() {
  * Limite de requêtes Cloudflare (binding ratelimits). Sans binding (tests), tout passe.
  * Renvoie true si la requête est autorisée.
  */
-export async function rateLimit(kind: "RSVP_LIMITER" | "FORM_LIMITER", key?: string) {
+export async function rateLimit(kind: "RSVP_LIMITER" | "FORM_LIMITER", action = "") {
   const env = await getEnv();
   const limiter = env[kind] as RateLimit | undefined;
   if (!limiter?.limit) return true;
-  const { success } = await limiter.limit({ key: key ?? (await clientIp()) });
+  // Compteur séparé par action : suivre sa commande ne bloque pas l'envoi du reçu.
+  const { success } = await limiter.limit({ key: `${action}:${await clientIp()}` });
   return success;
 }
 

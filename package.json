@@ -19,6 +19,7 @@
     "db:migrate:local": "wrangler d1 migrations apply louloua-db --local",
     "db:migrate:remote": "wrangler d1 migrations apply louloua-db --remote",
     "db:seed:local": "node scripts/seed-demo.ts && wrangler d1 execute louloua-db --local --file .wrangler/seed-demo.sql",
+    "admin:create": "node scripts/create-admin.ts",
     "db:seed:remote": "node scripts/seed-demo.ts && wrangler d1 execute louloua-db --remote --file .wrangler/seed-demo.sql",
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
     "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
