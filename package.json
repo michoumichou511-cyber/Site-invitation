@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "node scripts/build.mjs",
     "start": "next start",
     "lint": "eslint",
     "typecheck": "next typegen && tsc --noEmit",
@@ -23,8 +23,7 @@
     "admin:create": "node scripts/create-admin.ts",
     "db:seed:remote": "node scripts/seed-demo.ts && wrangler d1 execute louloua-db --remote --file .wrangler/seed-demo.sql",
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
-    "deploy": "opennextjs-cloudflare build && node scripts/cf-deploy.mjs",
-    "cf:build": "opennextjs-cloudflare build",
+    "deploy": "node scripts/cf-deploy.mjs",
     "cf:deploy": "node scripts/cf-deploy.mjs",
     "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts"
   },

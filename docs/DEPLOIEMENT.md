@@ -4,14 +4,14 @@ Tout tourne sur l'offre gratuite de Cloudflare : le site et le code serveur (Wor
 
 ## Le plus simple : Cloudflare relié à GitHub (Workers Builds)
 
-Cloudflare construit et publie le site à chaque push. Le script `scripts/cf-deploy.mjs` crée tout seul, au premier déploiement, la base D1, les stockages R2, les tables, les 6 modèles et le secret de connexion.
+Cloudflare construit et publie le site à chaque push. Sur Cloudflare, `pnpm run build` (`scripts/build.mjs` → `scripts/cf-prepare.mjs`) crée tout seul, au premier déploiement, la base D1, les stockages R2, les tables, les 6 modèles et le secret de connexion.
 
 1. Tableau de bord Cloudflare → **Workers & Pages** → **Create** → onglet **Workers** → **Import a repository** → choisir `Site-invitation`. (Pas « Pages » : le site a besoin d'un Worker.)
 2. Réglages du projet :
    - **Project name** : `louloua` (doit être identique au `name` de `wrangler.jsonc`)
    - **Production branch** : `main`
-   - **Build command** : `pnpm run cf:build`
-   - **Deploy command** : `pnpm run cf:deploy`
+   - **Build command** : `pnpm run build` (valeur par défaut)
+   - **Deploy command** : `npx wrangler deploy` (valeur par défaut)
    - **Variables de build** : `NODE_VERSION` = `22`
 3. **Save and Deploy**. Après quelques minutes, le site est en ligne sur `https://louloua.<votre-sous-domaine>.workers.dev`.
 4. Créer le premier compte admin depuis votre ordinateur (une seule fois) :

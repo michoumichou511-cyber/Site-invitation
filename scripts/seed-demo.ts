@@ -3,7 +3,8 @@
  *   pnpm db:seed:local   /   pnpm db:seed:remote
  * Rejouable : met à jour sans effacer les réponses déjà reçues.
  */
-import { writeFileSync } from "node:fs";
+import { mkdirSync, writeFileSync } from "node:fs";
+import { dirname } from "node:path";
 import { DEMO_BASE_DATE, DEMOS } from "../src/invitation/demos.ts";
 
 const q = (v: unknown) =>
@@ -52,5 +53,6 @@ ON CONFLICT(id) DO UPDATE SET name = excluded.name, max_seats = excluded.max_sea
 }
 
 const out = process.argv[2] ?? ".wrangler/seed-demo.sql";
+mkdirSync(dirname(out), { recursive: true });
 writeFileSync(out, lines.join("\n") + "\n");
 console.log(`SQL des démos écrit dans ${out}`);
