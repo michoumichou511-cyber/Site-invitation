@@ -1,6 +1,29 @@
 # Mettre le site en ligne (Cloudflare)
 
-Tout tourne sur l'offre gratuite de Cloudflare : le site et le code serveur (Workers), la base de données (D1), les fichiers (R2), l'anti-robot (Turnstile) et les statistiques (Web Analytics). À faire une seule fois, dans l'ordre.
+Tout tourne sur l'offre gratuite de Cloudflare : le site et le code serveur (Workers), la base de données (D1), les fichiers (R2), l'anti-robot (Turnstile) et les statistiques (Web Analytics).
+
+## Le plus simple : Cloudflare relié à GitHub (Workers Builds)
+
+Cloudflare construit et publie le site à chaque push. Le script `scripts/cf-deploy.mjs` crée tout seul, au premier déploiement, la base D1, les stockages R2, les tables, les 6 modèles et le secret de connexion.
+
+1. Tableau de bord Cloudflare → **Workers & Pages** → **Create** → onglet **Workers** → **Import a repository** → choisir `Site-invitation`. (Pas « Pages » : le site a besoin d'un Worker.)
+2. Réglages du projet :
+   - **Project name** : `louloua` (doit être identique au `name` de `wrangler.jsonc`)
+   - **Production branch** : `main`
+   - **Build command** : `pnpm run cf:build`
+   - **Deploy command** : `pnpm run cf:deploy`
+   - **Variables de build** : `NODE_VERSION` = `22`
+3. **Save and Deploy**. Après quelques minutes, le site est en ligne sur `https://louloua.<votre-sous-domaine>.workers.dev`.
+4. Créer le premier compte admin depuis votre ordinateur (une seule fois) :
+   `npx wrangler login` puis `pnpm admin:create -- vous@exemple.com "mot de passe de 12 caractères ou plus" "Votre nom" --remote`.
+
+Si le déploiement échoue sur la base ou les stockages (« permission »), donner au jeton de build les droits **D1 : Edit** et **Workers R2 Storage : Edit** (Settings → Builds → API token).
+
+Ensuite, les sections ci-dessous servent à compléter : e-mails (Resend), Turnstile, domaine, Sentry. Sans elles, le site fonctionne déjà : les e-mails ne partent pas (les liens de connexion restent disponibles dans l'admin pour WhatsApp) et l'anti-robot est en mode test.
+
+## À la main (sans Workers Builds)
+
+À faire une seule fois, dans l'ordre.
 
 ## 1. Préparer son ordinateur
 
@@ -18,20 +41,17 @@ pnpm dev                          # http://localhost:3000
 
 ```bash
 npx wrangler login
-npx wrangler d1 create louloua-db           # copier le "database_id" affiché
-npx wrangler r2 bucket create louloua-files
-npx wrangler r2 bucket create louloua-opennext-cache
 ```
 
-Dans `wrangler.jsonc`, remplacer `"database_id": "00000000-…"` par l'identifiant donné par `d1 create`.
+La base D1 et les stockages R2 sont créés par `pnpm deploy` (étape 4). Pour travailler ensuite depuis votre ordinateur sur la base en ligne, copier dans `wrangler.jsonc` le `database_id` affiché pendant le déploiement.
 
 ## 3. Secrets de production
 
 Chaque commande demande la valeur (elle n'est jamais écrite dans le code) :
 
 ```bash
-npx wrangler secret put BETTER_AUTH_SECRET     # longue chaîne aléatoire : openssl rand -base64 32
-npx wrangler secret put BETTER_AUTH_URL        # https://votre-domaine.com
+npx wrangler secret put BETTER_AUTH_SECRET     # créé automatiquement par pnpm deploy s'il manque
+npx wrangler secret put BETTER_AUTH_URL        # https://votre-domaine.com (facultatif avant le domaine)
 npx wrangler secret put RESEND_API_KEY         # compte gratuit sur resend.com (e-mails)
 npx wrangler secret put EMAIL_FROM             # ex. Lou'lou'a <bonjour@votre-domaine.com>
 npx wrangler secret put TURNSTILE_SECRET_KEY   # tableau de bord Cloudflare → Turnstile
@@ -40,7 +60,7 @@ npx wrangler secret put SENTRY_DSN             # facultatif : sentry.io, projet 
 
 Dans `wrangler.jsonc` → `vars` :
 
-- `PUBLIC_SITE_URL` : `https://votre-domaine.com`
+- `PUBLIC_SITE_URL` : `https://votre-domaine.com` (vide = l'adresse par laquelle on visite le site)
 - `TURNSTILE_SITE_KEY` : la clé publique Turnstile (remplace la clé de test)
 - `PUBLIC_CF_BEACON_TOKEN` : jeton Cloudflare Web Analytics (facultatif)
 
@@ -49,10 +69,8 @@ Dans `src/config/site.ts` : vrai numéro WhatsApp, e-mail, Instagram, TikTok, et
 ## 4. Base de données en ligne et premier déploiement
 
 ```bash
-pnpm db:migrate:remote        # crée les tables
-pnpm db:seed:remote           # les 6 modèles du catalogue et leurs démos
+pnpm deploy                   # crée D1 et R2 si besoin, tables, 6 modèles, publication
 pnpm admin:create -- vous@exemple.com "mot de passe" "Votre nom" --remote
-pnpm deploy                   # build OpenNext + déploiement du Worker
 ```
 
 Le site est alors en ligne sur `https://louloua.<votre-compte>.workers.dev`. À la première connexion sur `/fr/admin`, la double authentification est demandée : scannez le QR code avec Google Authenticator, Microsoft Authenticator ou 2FAS, et gardez les codes de secours.

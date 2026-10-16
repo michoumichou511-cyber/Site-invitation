@@ -6,6 +6,7 @@ import { cache } from "react";
 import { headers } from "next/headers";
 import { getDb, getEnv, schema } from "@/db";
 import { sendEmail } from "@/lib/email";
+import { publicBaseUrl } from "@/lib/url";
 import { authOptions } from "./options";
 
 /**
@@ -39,13 +40,15 @@ export const getAuth = cache(async () => {
   return betterAuth({
     ...options,
     secret: env.BETTER_AUTH_SECRET,
-    baseURL: env.BETTER_AUTH_URL,
+    // Sans domaine configuré, l'adresse vient de la requête (ex. *.workers.dev).
+    baseURL: env.BETTER_AUTH_URL || (await publicBaseUrl()),
     trustedOrigins: [
       env.BETTER_AUTH_URL,
       env.PUBLIC_SITE_URL,
+      await publicBaseUrl(),
       // Développement et tests : n'importe quel port local.
-      ...(env.BETTER_AUTH_URL.startsWith("http://localhost") ? ["http://localhost:*"] : []),
-    ],
+      ...((env.BETTER_AUTH_URL || "").startsWith("http://localhost") ? ["http://localhost:*"] : []),
+    ].filter(Boolean),
     database: drizzleAdapter(db, { provider: "sqlite", schema }),
     plugins: [...options.plugins, nextCookies()],
   });

@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { ErrorReporter, WebAnalytics } from "@/components/site/Monitoring";
-import { getEnv } from "@/db";
+import { publicBaseUrl } from "@/lib/url";
 import { analyticsToken } from "@/lib/analytics";
 import { localeDir, routing } from "@/i18n/routing";
 import { marcellus, reemKufi, tajawal } from "../fonts";
@@ -27,12 +27,7 @@ export const viewport: Viewport = {
 export async function generateMetadata({ params }: LayoutProps<"/[locale]">): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "meta" });
-  let base = "http://localhost:3000";
-  try {
-    base = (await getEnv()).PUBLIC_SITE_URL;
-  } catch {
-    // Pages pré-rendues au build : pas de contexte Cloudflare.
-  }
+  const base = await publicBaseUrl();
   return {
     metadataBase: new URL(base),
     title: { default: t("title"), template: `%s · ${t("brand")}` },

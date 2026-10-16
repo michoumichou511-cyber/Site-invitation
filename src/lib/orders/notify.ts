@@ -1,7 +1,7 @@
 import "server-only";
 import { getTranslations } from "next-intl/server";
-import { getEnv } from "@/db";
 import { sendEmail } from "@/lib/email";
+import { publicBaseUrl } from "@/lib/url";
 
 type Kind = "order" | "receipt" | "paid" | "refused" | "delivered";
 
@@ -24,8 +24,7 @@ export async function notifyCustomer(
 }
 
 export async function siteUrl(path = "") {
-  const env = await getEnv();
-  return `${env.PUBLIC_SITE_URL.replace(/\/$/, "")}${path}`;
+  return `${await publicBaseUrl()}${path}`;
 }
 
 const escapeHtml = (s: string) =>

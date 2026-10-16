@@ -23,7 +23,9 @@
     "admin:create": "node scripts/create-admin.ts",
     "db:seed:remote": "node scripts/seed-demo.ts && wrangler d1 execute louloua-db --remote --file .wrangler/seed-demo.sql",
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
-    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "deploy": "opennextjs-cloudflare build && node scripts/cf-deploy.mjs",
+    "cf:build": "opennextjs-cloudflare build",
+    "cf:deploy": "node scripts/cf-deploy.mjs",
     "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts"
   },
   "packageManager": "pnpm@10.28.0",

@@ -1,11 +1,11 @@
 import type { MetadataRoute } from "next";
-import { getEnv } from "@/db";
+import { publicBaseUrl } from "@/lib/url";
 
 export const dynamic = "force-dynamic";
 
 /** Invitations, espace client, admin et commande ne sont jamais indexés. */
 export default async function robots(): Promise<MetadataRoute.Robots> {
-  const base = (await getEnv()).PUBLIC_SITE_URL.replace(/\/$/, "");
+  const base = await publicBaseUrl();
   return {
     rules: {
       userAgent: "*",

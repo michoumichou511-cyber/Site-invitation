@@ -30,7 +30,8 @@
     { "name": "FORM_LIMITER", "namespace_id": "1002", "simple": { "limit": 20, "period": 60 } },
   ],
   "vars": {
-    "PUBLIC_SITE_URL": "http://localhost:3000",
+    // Adresse publique (vide = celle de la requête, ex. *.workers.dev). Mettre le domaine ici.
+    "PUBLIC_SITE_URL": "",
     // Clé publique Turnstile (clé de test « toujours OK » en local, à remplacer en production).
     "TURNSTILE_SITE_KEY": "1x00000000000000000000AA",
     // Jeton Cloudflare Web Analytics (vide = désactivé).
