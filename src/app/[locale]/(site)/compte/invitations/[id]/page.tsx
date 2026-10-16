@@ -5,6 +5,7 @@ import { events } from "@/db/schema";
 import type { BaseConfig } from "@/invitation/engine/config";
 import { invitationDicts } from "@/invitation/server/page";
 import { requireOwnedInvitation } from "@/lib/auth/client-guard";
+import { siteUrl } from "@/lib/orders/notify";
 import { arefRuqaa, pinyonScript } from "@/app/fonts";
 import "@/invitation/invitation.css";
 
@@ -66,6 +67,8 @@ export default async function EditPage({ params }: PageProps<"/[locale]/compte/i
         invitationId={invitation.id}
         initial={initial}
         dicts={invitationDicts}
+        slug={invitation.slug}
+        link={await siteUrl(`/i/${invitation.slug}`)}
       />
     </div>
   );

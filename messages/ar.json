@@ -148,7 +148,16 @@
       "hajj": "العودة من الحج: {names}",
       "aid_ramadan": "{names} يدعوكم",
       "entreprise": "{names} يدعوكم"
-    }
+    },
+    "candleTitle": "تمنَّ أمنية",
+    "candleBlow": "المس اللهب لإطفاء الشمعة",
+    "candleDone": "وصلت أمنيتك! عيد ميلاد سعيد!",
+    "discreetArt": "رسم",
+    "invitedSingle": "أنتم مدعوون للاحتفال مع",
+    "invitedSingleNamed": "{name}، أنتم مدعوون للاحتفال مع",
+    "imageCard": "نسخة صورة",
+    "imageCardHelp": "بطاقة PNG مع رمز QR، تُرسل لكبار السن.",
+    "imageCardDownload": "تحميل البطاقة"
   },
   "events": {
     "mariage": "عرس",

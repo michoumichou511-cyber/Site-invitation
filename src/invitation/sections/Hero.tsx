@@ -21,7 +21,13 @@ export function Hero({ vm, lang, t }: SectionProps) {
       {config.hosts?.[lang] && <p className="inv-reveal inv-hosts">{config.hosts[lang]}</p>}
       <div className="inv-reveal inv-hero">
         <div className="inv-dear">
-          {guest ? t("invitedNamed", { name: guest.name }) : t("invited")}
+          {config.names.second
+            ? guest
+              ? t("invitedNamed", { name: guest.name })
+              : t("invited")
+            : guest
+              ? t("invitedSingleNamed", { name: guest.name })
+              : t("invitedSingle")}
         </div>
         <h1 className="inv-names">
           <span className="n">{config.names.first[lang]}</span>

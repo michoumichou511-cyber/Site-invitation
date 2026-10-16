@@ -27,6 +27,7 @@ import { formatHijri } from "@/invitation/engine/dates";
 import type { Dicts } from "@/invitation/engine/i18n";
 import { InvitationApp } from "@/invitation/engine/InvitationApp";
 import { THEMES } from "@/invitation/themes";
+import { ImageCardButton } from "./ImageCardButton";
 import { algiersToUtc } from "@/lib/orders/draft";
 
 export type EditorState = WizardDraft & {
@@ -42,10 +43,14 @@ export function InvitationEditor({
   invitationId,
   initial,
   dicts,
+  slug,
+  link,
 }: {
   invitationId: string;
   initial: EditorState;
   dicts: Dicts;
+  slug: string;
+  link: string;
 }) {
   const t = useTranslations("account.edit");
   const o = useTranslations("order");
@@ -384,6 +389,8 @@ export function InvitationEditor({
             onChange={(v) => update({ genericMaxSeats: Math.min(20, Math.max(1, Number(v) || 1)) })}
           />
         </fieldset>
+
+        {vm && <ImageCardButton vm={{ ...vm, slug }} link={link} dicts={dicts} />}
 
         <div className="fixed inset-x-0 bottom-0 z-20 border-t border-wall bg-bg/95 px-4 pt-3 pb-[calc(12px+env(safe-area-inset-bottom))] backdrop-blur">
           <div className="mx-auto flex max-w-5xl flex-wrap items-center gap-3 pe-16 md:pe-0">

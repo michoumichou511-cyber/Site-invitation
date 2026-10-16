@@ -9,7 +9,10 @@ import { useMusic } from "./music";
 import { paletteVars, type ThemeDefinition } from "./theme";
 import type { InvitationViewModel } from "./types";
 import { useReveal } from "./useReveal";
+import { Doors } from "../openers/Doors";
 import { Envelope } from "../openers/Envelope";
+import { Gift } from "../openers/Gift";
+import { Candle } from "../sections/Candle";
 import { Closing } from "../sections/Closing";
 import { Countdown } from "../sections/Countdown";
 import { Gallery } from "../sections/Gallery";
@@ -18,6 +21,8 @@ import { Hero } from "../sections/Hero";
 import { Program } from "../sections/Program";
 import { Rsvp } from "../sections/Rsvp";
 import { Venue } from "../sections/Venue";
+
+const OPENERS = { envelope: Envelope, doors: Doors, gift: Gift };
 
 /** Moteur d'invitation : ouverture, outils (son, langue), sections du thème. */
 export function InvitationApp({
@@ -109,6 +114,7 @@ export function InvitationApp({
   );
 
   const props = { vm, lang, t };
+  const Opener = OPENERS[theme.opener];
   const otherLang: Lang = lang === "fr" ? "ar" : "fr";
   const showLang = vm.languages.includes(otherLang);
   const cardText = [vm.config.names.first[lang], vm.config.names.second?.[lang]]
@@ -160,7 +166,7 @@ export function InvitationApp({
           <style>{`.env-intro{display:none}html{overflow:auto!important}`}</style>
         </noscript>
       )}
-      <Envelope
+      <Opener
         t={t}
         cardText={cardText}
         initials={vm.config.initials}
@@ -174,7 +180,8 @@ export function InvitationApp({
         {vm.config.sections.countdown && <Countdown {...props} />}
         {vm.config.sections.program && <Program {...props} />}
         {vm.config.sections.venue && <Venue {...props} />}
-        {vm.config.sections.gallery && <Gallery {...props} />}
+        {theme.candle && <Candle {...props} onBlow={() => confetti.current?.burst(0.5)} />}
+        {vm.config.sections.gallery && <Gallery {...props} style={theme.galleryStyle} />}
         <Rsvp {...props} onAnswered={onAnswered} />
         <Guestbook {...props} />
         <Closing {...props} />

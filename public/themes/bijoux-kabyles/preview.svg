@@ -1,0 +1,10 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 270 570' width='270' height='570'>
+<defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='#4F4940'/><stop offset='1' stop-color='#3A352E'/></linearGradient></defs>
+<rect width='270' height='570' fill='url(#g)'/>
+<path d='M35 510V200a100 100 0 0 1 200 0v310' fill='none' stroke='#E2C9A0' stroke-width='1.2' opacity='.6'/>
+<g transform='translate(135 120)'><path d='M0-34l24 24-24 24-24-24z' fill='none' stroke='#E2C9A0' stroke-width='2'/><circle r='9' fill='#DB7456'/><circle cx='-24' cy='-10' r='5' fill='#578993'/><circle cx='24' cy='-10' r='5' fill='#578993'/><path d='M-30 20h60' stroke='#B4B6B6' stroke-width='2'/></g>
+<text x='135' y='265' text-anchor='middle' font-family='Georgia, serif' font-style='italic' font-size='42' fill='#FFFFFF'>Amayas</text><text x='135' y='298' text-anchor='middle' font-family='Georgia, serif' font-style='italic' font-size='22' fill='#E2C9A0'>&amp;</text><text x='135' y='340' text-anchor='middle' font-family='Georgia, serif' font-style='italic' font-size='42' fill='#FFFFFF'>Thiziri</text>
+<text x='135' y='385' text-anchor='middle' font-family='system-ui, sans-serif' font-size='13' fill='#E6E6E4'>Tizi Ouzou · 16h00</text>
+<rect x='75' y='430' width='120' height='32' rx='16' fill='#3F6F78'/>
+<text x='135' y='451' text-anchor='middle' font-family='system-ui, sans-serif' font-weight='700' font-size='14' fill='#FFFFFF'>♥</text>
+</svg>

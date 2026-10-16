@@ -70,6 +70,11 @@ test("un client importe 100 invités, envoie les liens, voit les réponses et ex
     .fill(`${first} B.`);
   await page.getByRole("button", { name: "Enregistrer", exact: true }).click();
   await expect(page.getByText("Modifications enregistrées.")).toBeVisible();
+  // Version image (carte PNG avec QR code).
+  const card = page.waitForEvent("download");
+  await page.getByRole("button", { name: "Télécharger la carte image" }).click();
+  expect((await card).suggestedFilename()).toMatch(/^invitation-.+\.png$/);
+  if (process.env.SAVE_CARD) await (await card).saveAs(process.env.SAVE_CARD);
   await guestPage.reload();
   await guestPage.getByRole("button", { name: "Ouvrir l'invitation" }).click();
   await expect(guestPage.getByRole("heading", { level: 1 })).toContainText(`${first} B.`);

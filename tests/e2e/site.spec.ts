@@ -35,10 +35,7 @@ test("accueil → catalogue → fiche modèle → démo", async ({ page }) => {
   await page.goto("/fr");
   await page.getByRole("link", { name: "Voir les modèles" }).first().click();
   await expect(page).toHaveURL(/\/fr\/modeles$/);
-  await page
-    .getByRole("link", { name: /Karakou/ })
-    .first()
-    .click();
+  await page.locator('main a[href="/fr/modeles/karakou"]').first().click();
   await expect(page).toHaveURL(/\/fr\/modeles\/karakou$/);
   await expect(page.getByRole("link", { name: "Personnaliser ce modèle" })).toHaveAttribute(
     "href",

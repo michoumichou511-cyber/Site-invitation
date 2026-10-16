@@ -22,7 +22,12 @@ export type ThemePalette = {
 
 export type ThemeDefinition = {
   slug: string;
-  opener: "envelope";
+  /** Ouverture : enveloppe à sceau, porte de la Casbah, cadeau. */
+  opener: "envelope" | "doors" | "gift";
+  /** Galerie : arches (défaut) ou polaroïds. */
+  galleryStyle?: "arch" | "polaroid";
+  /** Bougie à souffler (anniversaire). */
+  candle?: boolean;
   palettes: Record<string, ThemePalette>;
   defaultPalette: string;
   /** Couleurs des pétales / paillettes à l'ouverture et au RSVP */
@@ -44,3 +49,6 @@ export function paletteVars(p: ThemePalette): Record<string, string> {
     "--inv-on-action": p.onAction,
   };
 }
+
+/** Motif SVG (data URI) pour le fond, coloré pour le thème. */
+export const svgPattern = (svg: string) => `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;

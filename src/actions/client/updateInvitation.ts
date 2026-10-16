@@ -138,16 +138,14 @@ export async function addInvitationPhoto(form: FormData) {
   try {
     const stored = await storeFile(file, "photo", `inv/${invitation.id}`);
     await db.batch([
-      db
-        .insert(media)
-        .values({
-          invitationId: invitation.id,
-          ownerId: owned.viewer.profileId,
-          kind: "photo",
-          r2Key: stored.key,
-          mimeType: stored.mimeType,
-          sizeBytes: stored.sizeBytes,
-        }),
+      db.insert(media).values({
+        invitationId: invitation.id,
+        ownerId: owned.viewer.profileId,
+        kind: "photo",
+        r2Key: stored.key,
+        mimeType: stored.mimeType,
+        sizeBytes: stored.sizeBytes,
+      }),
       db
         .update(invitations)
         .set({

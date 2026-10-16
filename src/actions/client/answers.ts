@@ -40,17 +40,15 @@ export async function addManualRsvp(raw: z.input<typeof manualInput>) {
       return { ok: true as const };
     }
   }
-  await db
-    .insert(rsvps)
-    .values({
-      invitationId: invitation.id,
-      guestId,
-      name,
-      answer,
-      seats,
-      message,
-      source: "manuel",
-    });
+  await db.insert(rsvps).values({
+    invitationId: invitation.id,
+    guestId,
+    name,
+    answer,
+    seats,
+    message,
+    source: "manuel",
+  });
   return { ok: true as const };
 }
 

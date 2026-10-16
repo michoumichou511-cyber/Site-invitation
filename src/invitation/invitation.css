@@ -761,3 +761,326 @@
   max-width: 420px;
   width: 100%;
 }
+
+/* ---------- Ouverture : porte de la Casbah ---------- */
+.doors-stage {
+  perspective: 1400px;
+}
+.doors {
+  position: relative;
+  width: min(72vw, 300px);
+  aspect-ratio: 0.62;
+  border-radius: 999px 999px 6px 6px;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 10px var(--inv-ground-deep),
+    0 0 0 12px var(--inv-accent),
+    0 30px 60px -20px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  transform-style: preserve-3d;
+}
+.doors-inside {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at 50% 40%, var(--inv-paper), var(--inv-ground-deep));
+  color: var(--inv-ink);
+  text-align: center;
+  padding: 16px;
+}
+.doors-inside span {
+  font-family: var(--inv-script);
+  font-size: clamp(30px, 9vw, 42px);
+  color: var(--inv-action);
+}
+[dir="rtl"] .doors-inside span {
+  font-family: var(--inv-script-ar);
+}
+.door {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  background-color: #421a0c;
+  /* moucharabieh + clous de la porte */
+  background-image:
+    radial-gradient(circle, #d7c099 1.6px, transparent 2px),
+    linear-gradient(45deg, rgba(215, 192, 153, 0.25) 1px, transparent 1px),
+    linear-gradient(-45deg, rgba(215, 192, 153, 0.25) 1px, transparent 1px),
+    linear-gradient(90deg, #4f220f, #633525 50%, #4f220f);
+  background-size:
+    22px 22px,
+    16px 16px,
+    16px 16px,
+    100% 100%;
+  box-shadow: inset 0 0 0 4px #2b140a;
+  transition: transform 1.4s cubic-bezier(0.5, 0, 0.2, 1);
+  backface-visibility: hidden;
+}
+.door-start {
+  inset-inline-start: 0;
+  transform-origin: left center;
+}
+.door-end {
+  inset-inline-end: 0;
+  transform-origin: right center;
+}
+[dir="rtl"] .door-start {
+  transform-origin: right center;
+}
+[dir="rtl"] .door-end {
+  transform-origin: left center;
+}
+.doors.is-open .door-start {
+  transform: rotateY(-105deg);
+}
+.doors.is-open .door-end {
+  transform: rotateY(105deg);
+}
+[dir="rtl"] .doors.is-open .door-start {
+  transform: rotateY(105deg);
+}
+[dir="rtl"] .doors.is-open .door-end {
+  transform: rotateY(-105deg);
+}
+.doors-knocker {
+  all: unset;
+  cursor: pointer;
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  translate: -50% -50%;
+  z-index: 3;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  border: 5px solid #d7c099;
+  background: radial-gradient(circle at 35% 30%, #f1e2c2, #d7c099 55%, #a68a5a);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4);
+  transition: opacity 0.4s;
+}
+.doors-knocker span {
+  font-family: var(--inv-script);
+  font-size: 24px;
+  color: #421a0c;
+}
+.doors.is-open .doors-knocker {
+  opacity: 0;
+}
+
+/* ---------- Ouverture : cadeau ---------- */
+.gift {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 18px;
+}
+.gift-card {
+  margin: 0;
+  font-family: var(--inv-display);
+  font-size: clamp(28px, 8vw, 40px);
+  color: var(--inv-bright);
+  text-align: center;
+}
+.gift-box {
+  all: unset;
+  cursor: pointer;
+  position: relative;
+  width: 160px;
+  height: 150px;
+}
+.gift-body,
+.gift-lid {
+  position: absolute;
+  inset-inline: 0;
+  border-radius: 8px;
+  background:
+    linear-gradient(90deg, transparent 43%, #db7456 43%, #db7456 57%, transparent 57%),
+    var(--inv-action);
+  box-shadow: 0 20px 40px -18px rgba(0, 0, 0, 0.45);
+}
+.gift-body {
+  bottom: 0;
+  height: 110px;
+}
+.gift-lid {
+  top: 0;
+  height: 38px;
+  inset-inline: -10px;
+  transition: transform 0.9s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+.gift-lid::before,
+.gift-lid::after {
+  content: "";
+  position: absolute;
+  top: -26px;
+  width: 36px;
+  height: 30px;
+  border: 7px solid #db7456;
+  border-radius: 50% 50% 0 50%;
+}
+.gift-lid::before {
+  left: 50%;
+  translate: -100% 0;
+  rotate: -20deg;
+}
+.gift-lid::after {
+  left: 50%;
+  rotate: 110deg;
+}
+.gift.is-open .gift-lid {
+  transform: translateY(-140px) rotate(-24deg);
+}
+.gift-box:focus-visible {
+  outline: 3px solid var(--inv-accent);
+  outline-offset: 8px;
+}
+.gift-balloons {
+  position: absolute;
+  inset: auto 0 40px;
+  height: 0;
+}
+.gift-balloons span {
+  position: absolute;
+  bottom: 0;
+  left: calc(10% + var(--i) * 18%);
+  width: 46px;
+  height: 56px;
+  border-radius: 50% 50% 46% 46%;
+  background: var(--c);
+  animation: inv-balloon 2.4s cubic-bezier(0.3, 0.6, 0.4, 1) forwards;
+  animation-delay: calc(var(--i) * 0.12s);
+}
+.gift-balloons span::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 1px;
+  height: 60px;
+  background: rgba(0, 0, 0, 0.25);
+}
+@keyframes inv-balloon {
+  to {
+    transform: translateY(-120vh) rotate(calc((var(--i) - 2) * 6deg));
+  }
+}
+
+/* ---------- Bougie à souffler ---------- */
+.candle {
+  all: unset;
+  cursor: pointer;
+  position: relative;
+  display: block;
+  margin: 0 auto 12px;
+  width: 80px;
+  height: 170px;
+}
+.candle-stick {
+  position: absolute;
+  bottom: 0;
+  left: 26px;
+  width: 28px;
+  height: 110px;
+  border-radius: 6px;
+  background: repeating-linear-gradient(-45deg, #fff, #fff 8px, #db7456 8px, #db7456 14px);
+  box-shadow: inset -4px 0 0 rgba(0, 0, 0, 0.08);
+}
+.candle-flame {
+  position: absolute;
+  bottom: 110px;
+  left: 28px;
+  width: 24px;
+  height: 40px;
+  border-radius: 50% 50% 35% 35%;
+  background: radial-gradient(circle at 50% 70%, #fff6c8, #ffc94a 45%, #ff8a3d 80%);
+  box-shadow: 0 0 30px 10px rgba(255, 201, 74, 0.45);
+  transform-origin: 50% 90%;
+  animation: inv-flicker 0.6s ease-in-out infinite alternate;
+  transition:
+    opacity 0.3s,
+    transform 0.3s;
+}
+.candle.is-out .candle-flame {
+  opacity: 0;
+  transform: scale(0.2);
+}
+.candle-smoke {
+  position: absolute;
+  bottom: 120px;
+  left: 36px;
+  width: 8px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(120, 120, 120, 0.35);
+  opacity: 0;
+}
+.candle.is-out .candle-smoke {
+  animation: inv-smoke 1.4s ease-out forwards;
+}
+@keyframes inv-flicker {
+  to {
+    transform: rotate(4deg) scaleY(1.08);
+  }
+}
+@keyframes inv-smoke {
+  0% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-50px) scaleX(2);
+  }
+}
+.candle:focus-visible {
+  outline: 3px solid var(--inv-accent);
+  outline-offset: 6px;
+  border-radius: 12px;
+}
+
+/* ---------- Polaroïds ---------- */
+.inv-polaroids {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px 14px;
+  padding: 6px;
+}
+.inv-polaroids figure {
+  margin: 0;
+  padding: 8px 8px 30px;
+  background: #fff;
+  box-shadow: 0 14px 30px -14px rgba(0, 0, 0, 0.45);
+  rotate: var(--r);
+}
+.inv-polaroids img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+/* ---------- Mode discret : médaillon à la place des photos ---------- */
+.inv-discreet {
+  color: var(--inv-accent);
+  display: grid;
+  place-items: center;
+}
+.inv-discreet svg {
+  width: min(60vw, 220px);
+  height: auto;
+  opacity: 0.85;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .door,
+  .gift-lid {
+    transition: none;
+  }
+  .gift-balloons,
+  .candle-flame {
+    animation: none;
+  }
+}

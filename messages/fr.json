@@ -156,7 +156,16 @@
       "hajj": "Retour du hajj de {names}",
       "aid_ramadan": "{names} vous invite",
       "entreprise": "{names} vous invite"
-    }
+    },
+    "candleTitle": "Fais un vœu",
+    "candleBlow": "Touchez la flamme pour souffler la bougie",
+    "candleDone": "Vœu envoyé ! Joyeux anniversaire !",
+    "discreetArt": "Illustration",
+    "invitedSingle": "Vous êtes invités à fêter",
+    "invitedSingleNamed": "{name}, vous êtes invité·e à fêter",
+    "imageCard": "Version image",
+    "imageCardHelp": "Une carte PNG avec le QR code, à transférer aux personnes âgées.",
+    "imageCardDownload": "Télécharger la carte image"
   },
   "events": {
     "mariage": "Mariage",
