@@ -4,4 +4,5 @@ BETTER_AUTH_SECRET=remplacer-par-une-longue-chaine-aleatoire
 BETTER_AUTH_URL=http://localhost:3000
 RESEND_API_KEY=
 EMAIL_FROM="Lou'lou'a <bonjour@exemple.com>"
-TURNSTILE_SECRET_KEY=1x0000000000000000000000000000000AA
+# Vide en local/tests : vérification Turnstile ignorée. En production : wrangler secret put.
+TURNSTILE_SECRET_KEY=

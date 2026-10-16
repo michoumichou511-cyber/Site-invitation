@@ -7,6 +7,8 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 const nextConfig: NextConfig = {
   // Images déjà compressées en WebP à l'envoi : pas d'optimisation payante.
   images: { unoptimized: true },
+  // Commande : jusqu'à 3 photos (WebP compressées) + une musique MP3 (3 Mo).
+  experimental: { serverActions: { bodySizeLimit: "12mb" } },
   async redirects() {
     return [
       { source: "/", destination: "/fr", permanent: false },

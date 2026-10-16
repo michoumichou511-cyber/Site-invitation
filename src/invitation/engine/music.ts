@@ -7,7 +7,7 @@ import type { Synth } from "./synth";
  * Musique de l'invitation : démarre seulement au geste « Ouvrir » (les navigateurs
  * bloquent la lecture automatique). MP3 du client si présent, sinon mélodie générée.
  */
-export function useMusic(src: string | null) {
+export function useMusic(src: string | null, enabled = true) {
   const [started, setStarted] = useState(false);
   const [muted, setMuted] = useState(false);
   const audio = useRef<HTMLAudioElement | null>(null);
@@ -15,7 +15,7 @@ export function useMusic(src: string | null) {
   const ctx = useRef<AudioContext | null>(null);
 
   const start = useCallback(async () => {
-    if (started) return;
+    if (started || !enabled) return;
     setStarted(true);
     const { createAudioContext, startSynth } = await import("./synth");
     ctx.current = createAudioContext();
@@ -28,7 +28,7 @@ export function useMusic(src: string | null) {
     } else if (ctx.current) {
       synth.current = startSynth(ctx.current);
     }
-  }, [src, started]);
+  }, [src, started, enabled]);
 
   const toggle = useCallback(() => {
     setMuted((m) => {

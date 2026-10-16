@@ -17,7 +17,7 @@ export function generateStaticParams() {
 
 export const dynamicParams = false;
 
-const CLIENT_NAMESPACES = ["common", "order", "account", "admin"];
+const CLIENT_NAMESPACES = ["common", "order", "events", "account"];
 
 export const viewport: Viewport = {
   themeColor: "#EDEAE4",

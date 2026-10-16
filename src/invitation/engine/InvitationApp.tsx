@@ -24,16 +24,23 @@ export function InvitationApp({
   vm,
   theme,
   dicts,
+  embedded = false,
 }: {
   vm: InvitationViewModel;
   theme: ThemeDefinition;
   dicts: Dicts;
+  /** Aperçu dans le site (assistant, espace client) : ne touche pas à <html>. */
+  embedded?: boolean;
 }) {
   const [lang, setLang] = useState<Lang>(vm.defaultLang);
   const [opened, setOpened] = useState(false);
   const [ctaHidden, setCtaHidden] = useState(Boolean(vm.existingRsvp));
   const t = useMemo(() => translator(dicts, lang), [dicts, lang]);
-  const music = useMusic(vm.config.music?.src ?? null);
+  const musicConfig = vm.config.music;
+  const music = useMusic(
+    musicConfig && musicConfig !== "none" ? musicConfig.src : null,
+    musicConfig !== "none",
+  );
   const main = useRef<HTMLElement>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
   const confetti = useRef<ReturnType<typeof createConfetti> | null>(null);
@@ -45,9 +52,10 @@ export function InvitationApp({
 
   // Langue : <html lang dir> suit la bascule FR / ع.
   useEffect(() => {
+    if (embedded) return;
     document.documentElement.lang = lang;
     document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
-  }, [lang]);
+  }, [lang, embedded]);
 
   // Pas de défilement tant que l'enveloppe est fermée.
   useEffect(() => {
@@ -77,10 +85,10 @@ export function InvitationApp({
 
   // Service worker : l'invitation reste lisible sans réseau dans la salle.
   useEffect(() => {
-    if ("serviceWorker" in navigator && process.env.NODE_ENV === "production") {
+    if (!embedded && "serviceWorker" in navigator && process.env.NODE_ENV === "production") {
       navigator.serviceWorker.register("/sw-invitation.js", { scope: "/i/" }).catch(() => {});
     }
-  }, []);
+  }, [embedded]);
 
   const onOpen = useCallback(() => {
     void music.start();

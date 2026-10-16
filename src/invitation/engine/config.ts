@@ -38,9 +38,9 @@ export const baseConfigSchema = z.object({
     .array(z.object({ src: z.string().max(300), alt: i18nText(120) }))
     .max(12)
     .default([]),
-  /** MP3 choisi (URL publique R2) ; null = mélodie générée par le navigateur. */
+  /** MP3 choisi (URL publique R2) ; null = mélodie générée ; "none" = sans musique. */
   music: z
-    .object({ src: z.string().max(300) })
+    .union([z.object({ src: z.string().max(300) }), z.literal("none")])
     .nullable()
     .default(null),
   /** Téléphone de la famille pour « Appeler » et « WhatsApp ». */
