@@ -1,0 +1,31 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "louloua",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-09-01",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS",
+  },
+  "services": [{ "binding": "WORKER_SELF_REFERENCE", "service": "louloua" }],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "louloua-db",
+      // Remplacer par l'identifiant donné par `wrangler d1 create louloua-db`.
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "migrations_dir": "drizzle",
+    },
+  ],
+  "r2_buckets": [
+    // Photos, musiques, reçus.
+    { "binding": "R2", "bucket_name": "louloua-files" },
+    // Cache des pages Next.js (voir https://opennext.js.org/cloudflare/caching).
+    { "binding": "NEXT_INC_CACHE_R2_BUCKET", "bucket_name": "louloua-opennext-cache" },
+  ],
+  "vars": {
+    "PUBLIC_SITE_URL": "http://localhost:3000",
+  },
+  "observability": { "enabled": true },
+}

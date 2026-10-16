@@ -1,0 +1,7 @@
+# Copier en .dev.vars pour le développement local (jamais commité).
+# En production : `wrangler secret put <NOM>`.
+BETTER_AUTH_SECRET=remplacer-par-une-longue-chaine-aleatoire
+BETTER_AUTH_URL=http://localhost:3000
+RESEND_API_KEY=
+EMAIL_FROM="Lou'lou'a <bonjour@exemple.com>"
+TURNSTILE_SECRET_KEY=1x0000000000000000000000000000000AA

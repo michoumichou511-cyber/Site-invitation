@@ -5,12 +5,12 @@ Ce dossier est le point de départ du projet. Claude Code lit automatiquement
 
 ## Ce qu'il y a dedans
 
-| Dossier / fichier | Contenu |
-| --- | --- |
-| `CLAUDE.md` | Les règles du projet (stack, code, performance, design). Lu à chaque session. |
-| `docs/` | Les 6 documents (PRD, TRD, APP_FLOW, UI_UX, BACKEND_SCHEMA, IMPLEMENTATION_PLAN) + ANIMATIONS |
-| `design/references/` | Les 2 prototypes (héro 3D, invitation enveloppe) que Claude Code doit reproduire et améliorer |
-| `src/db/schema.ts`, `drizzle/`, `drizzle.config.ts` | La base de données, déjà écrite et testée (14 tables) |
+| Dossier / fichier                                   | Contenu                                                                                       |
+| --------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| `CLAUDE.md`                                         | Les règles du projet (stack, code, performance, design). Lu à chaque session.                 |
+| `docs/`                                             | Les 6 documents (PRD, TRD, APP_FLOW, UI_UX, BACKEND_SCHEMA, IMPLEMENTATION_PLAN) + ANIMATIONS |
+| `design/references/`                                | Les 2 prototypes (héro 3D, invitation enveloppe) que Claude Code doit reproduire et améliorer |
+| `src/db/schema.ts`, `drizzle/`, `drizzle.config.ts` | La base de données, déjà écrite et testée (14 tables)                                         |
 
 ## Les étapes
 
@@ -36,6 +36,7 @@ Ce dossier est le point de départ du projet. Claude Code lit automatiquement
    Résultat attendu : une page d'accueil vide qui bascule FR/AR, déployée sur Cloudflare.
    Vérifie les critères « Terminé quand » de la phase 0. Montre-moi le plan avant de coder.
    ```
+
 4. Valide son plan, laisse-le coder, vérifie le résultat, puis passe à la phase suivante
    (prompts 1 à 6 dans `docs/IMPLEMENTATION_PLAN.md`).
 

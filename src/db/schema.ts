@@ -10,14 +10,7 @@
  * - Montants : entiers en dinars algériens (DA), jamais de décimales.
  */
 import { relations, sql } from "drizzle-orm";
-import {
-  check,
-  index,
-  integer,
-  sqliteTable,
-  text,
-  uniqueIndex,
-} from "drizzle-orm/sqlite-core";
+import { check, index, integer, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core";
 
 /* ------------------------------------------------------------------ */
 /* Types partagés                                                      */
@@ -54,13 +47,7 @@ export const ORDER_STATUSES = [
   "annulee",
 ] as const;
 
-export const PAYMENT_METHODS = [
-  "baridimob",
-  "ccp",
-  "edahabia",
-  "cib",
-  "especes",
-] as const;
+export const PAYMENT_METHODS = ["baridimob", "ccp", "edahabia", "cib", "especes"] as const;
 
 export const PAYMENT_STATUSES = ["en_attente", "valide", "refuse", "rembourse"] as const;
 
@@ -110,8 +97,12 @@ export const profiles = sqliteTable(
     fullName: text("full_name").notNull(),
     phone: text("phone"), // format international +213...
     whatsapp: text("whatsapp"),
-    locale: text("locale", { enum: ["fr", "ar"] }).notNull().default("fr"),
-    role: text("role", { enum: ["client", "admin"] }).notNull().default("client"),
+    locale: text("locale", { enum: ["fr", "ar"] })
+      .notNull()
+      .default("fr"),
+    role: text("role", { enum: ["client", "admin"] })
+      .notNull()
+      .default("client"),
     partnerCodeId: text("partner_code_id").references(() => promoCodes.id, {
       onDelete: "set null",
     }),
@@ -137,13 +128,19 @@ export const templates = sqliteTable(
       .$type<(typeof EVENT_TYPES)[number][]>()
       .notNull(),
     style: text("style").notNull(), // karakou, zellige, casbah, kabyle, mzab, baie, tassili, aures...
-    tags: text("tags", { mode: "json" }).$type<string[]>().notNull().default(sql`'[]'`),
+    tags: text("tags", { mode: "json" })
+      .$type<string[]>()
+      .notNull()
+      .default(sql`'[]'`),
     previewImage: text("preview_image").notNull(), // clé R2
     previewVideo: text("preview_video"), // clé R2
     basePriceDa: integer("base_price_da").notNull(),
     minPack: text("min_pack", { enum: PACKS }).notNull().default("essentiel"),
     configSchemaVersion: integer("config_schema_version").notNull().default(1),
-    badges: text("badges", { mode: "json" }).$type<("nouveau" | "populaire")[]>().notNull().default(sql`'[]'`),
+    badges: text("badges", { mode: "json" })
+      .$type<("nouveau" | "populaire")[]>()
+      .notNull()
+      .default(sql`'[]'`),
     isActive: integer("is_active", { mode: "boolean" }).notNull().default(true),
     sortOrder: integer("sort_order").notNull().default(0),
     createdAt: createdAt(),
@@ -185,7 +182,10 @@ export const orders = sqliteTable(
       .notNull()
       .references(() => templates.id, { onDelete: "restrict" }),
     pack: text("pack", { enum: PACKS }).notNull(),
-    options: text("options", { mode: "json" }).$type<string[]>().notNull().default(sql`'[]'`),
+    options: text("options", { mode: "json" })
+      .$type<string[]>()
+      .notNull()
+      .default(sql`'[]'`),
     amountDa: integer("amount_da").notNull(),
     discountDa: integer("discount_da").notNull().default(0),
     promoCodeId: text("promo_code_id").references(() => promoCodes.id, { onDelete: "set null" }),
@@ -256,7 +256,10 @@ export const invitations = sqliteTable(
     slug: text("slug").notNull().unique(), // /i/<slug>, non séquentiel
     eventType: text("event_type", { enum: EVENT_TYPES }).notNull(),
     config: text("config", { mode: "json" }).$type<InvitationConfig>().notNull(),
-    languages: text("languages", { mode: "json" }).$type<("fr" | "ar" | "tz")[]>().notNull().default(sql`'["fr","ar"]'`),
+    languages: text("languages", { mode: "json" })
+      .$type<("fr" | "ar" | "tz")[]>()
+      .notNull()
+      .default(sql`'["fr","ar"]'`),
     discreetMode: integer("discreet_mode", { mode: "boolean" }).notNull().default(false),
     accessCodeHash: text("access_code_hash"), // code d'accès optionnel (haché)
     allowGenericLink: integer("allow_generic_link", { mode: "boolean" }).notNull().default(true),
@@ -342,15 +345,21 @@ export const rsvps = sqliteTable(
     answer: text("answer", { enum: RSVP_ANSWERS }).notNull(),
     seats: integer("seats").notNull().default(1),
     message: text("message"),
-    source: text("source", { enum: ["lien", "manuel"] }).notNull().default("lien"),
+    source: text("source", { enum: ["lien", "manuel"] })
+      .notNull()
+      .default("lien"),
     createdAt: createdAt(),
     updatedAt: updatedAt(),
   },
   (t) => [
     index("rsvps_invitation_idx").on(t.invitationId, t.answer),
     // une seule réponse par invité nominatif et par moment de la fête
-    uniqueIndex("rsvps_guest_event_uq").on(t.guestId, t.eventId).where(sql`${t.eventId} is not null`),
-    uniqueIndex("rsvps_guest_all_uq").on(t.guestId).where(sql`${t.eventId} is null and ${t.guestId} is not null`),
+    uniqueIndex("rsvps_guest_event_uq")
+      .on(t.guestId, t.eventId)
+      .where(sql`${t.eventId} is not null`),
+    uniqueIndex("rsvps_guest_all_uq")
+      .on(t.guestId)
+      .where(sql`${t.eventId} is null and ${t.guestId} is not null`),
     check("rsvps_answer_ck", inList(t.answer, RSVP_ANSWERS)),
     check("rsvps_seats_ck", sql`${t.seats} >= 0`),
   ],
@@ -369,8 +378,12 @@ export const checkins = sqliteTable(
     scannedAt: createdAt(),
   },
   (t) => [
-    uniqueIndex("checkins_guest_event_uq").on(t.guestId, t.eventId).where(sql`${t.eventId} is not null`),
-    uniqueIndex("checkins_guest_all_uq").on(t.guestId).where(sql`${t.eventId} is null`),
+    uniqueIndex("checkins_guest_event_uq")
+      .on(t.guestId, t.eventId)
+      .where(sql`${t.eventId} is not null`),
+    uniqueIndex("checkins_guest_all_uq")
+      .on(t.guestId)
+      .where(sql`${t.eventId} is null`),
   ],
 );
 
@@ -410,17 +423,17 @@ export const media = sqliteTable(
 export const reviews = sqliteTable(
   "reviews",
   {
-  id: id(),
-  orderId: text("order_id")
-    .notNull()
-    .unique()
-    .references(() => orders.id, { onDelete: "cascade" }),
-  rating: integer("rating").notNull(), // 1 à 5
-  text: text("text"),
-  screenshotKey: text("screenshot_key"),
-  consentToPublish: integer("consent_to_publish", { mode: "boolean" }).notNull().default(false),
-  isPublished: integer("is_published", { mode: "boolean" }).notNull().default(false),
-  createdAt: createdAt(),
+    id: id(),
+    orderId: text("order_id")
+      .notNull()
+      .unique()
+      .references(() => orders.id, { onDelete: "cascade" }),
+    rating: integer("rating").notNull(), // 1 à 5
+    text: text("text"),
+    screenshotKey: text("screenshot_key"),
+    consentToPublish: integer("consent_to_publish", { mode: "boolean" }).notNull().default(false),
+    isPublished: integer("is_published", { mode: "boolean" }).notNull().default(false),
+    createdAt: createdAt(),
   },
   (t) => [check("reviews_rating_ck", sql`${t.rating} between 1 and 5`)],
 );
@@ -455,7 +468,11 @@ export const templatesRelations = relations(templates, ({ many }) => ({
 }));
 
 export const ordersRelations = relations(orders, ({ one, many }) => ({
-  customer: one(profiles, { fields: [orders.customerId], references: [profiles.id], relationName: "customer" }),
+  customer: one(profiles, {
+    fields: [orders.customerId],
+    references: [profiles.id],
+    relationName: "customer",
+  }),
   assignee: one(profiles, { fields: [orders.assignedTo], references: [profiles.id] }),
   template: one(templates, { fields: [orders.templateId], references: [templates.id] }),
   promoCode: one(promoCodes, { fields: [orders.promoCodeId], references: [promoCodes.id] }),

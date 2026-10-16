@@ -1,0 +1,77 @@
+@import "tailwindcss";
+@import "../styles/tokens.css";
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-wall: var(--wall);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-cedar: var(--cedar);
+  --color-sea: var(--sea);
+  --color-sea-light: var(--sea-light);
+  --color-brass: var(--brass);
+  --color-zellige: var(--zellige);
+  --color-coral: var(--coral);
+  --color-danger: var(--danger);
+  --color-whatsapp: var(--whatsapp);
+
+  --font-display: var(--font-display-family);
+  --font-sans: var(--font-body-family);
+  --font-script: var(--font-script-family);
+
+  --radius-field: var(--radius-field);
+  --radius-card: var(--radius-card);
+
+  --shadow-float: var(--shadow-float);
+
+  --container-site: var(--max-width);
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body-family), system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+:where(h1, h2, h3) {
+  font-family: var(--font-display-family), serif;
+  line-height: 1.1;
+}
+
+:where([dir="rtl"]) :where(h1, h2, h3) {
+  line-height: 1.4;
+}
+
+:focus-visible {
+  outline: 3px solid var(--sea);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+:root {
+  --font-display-family: var(--font-marcellus);
+  --font-body-family: var(--font-tajawal);
+  --font-script-family: var(--font-pinyon);
+}
+
+:root:lang(ar) {
+  --font-display-family: var(--font-reem-kufi);
+  --font-script-family: var(--font-aref-ruqaa);
+}

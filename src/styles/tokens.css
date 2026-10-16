@@ -1,0 +1,46 @@
+/*
+ * Design tokens — valeurs exactes de docs/UI_UX.md.
+ * Couleurs du site : palettes Casbah + baie d'Alger (mesurées sur photos).
+ */
+:root {
+  /* Couleurs */
+  --bg: #edeae4;
+  --surface: #ffffff;
+  --wall: #dcd8cf;
+  --ink: #2b140a;
+  --ink-soft: #6b5a50;
+  --cedar: #421a0c;
+  --sea: #045588;
+  --sea-light: #a8c7de;
+  --brass: #d7c099;
+  --zellige: #16544e;
+  --coral: #db7456; /* écrire en --ink dessus, jamais en blanc */
+  --danger: #a3302a;
+  --whatsapp: #128c7e;
+
+  /* Espacements */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+  --gutter: 16px;
+
+  /* Rayons */
+  --radius-field: 8px;
+  --radius-card: 16px;
+  --radius-pill: 999px;
+
+  /* Ombre unique pour ce qui flotte */
+  --shadow-float: 0 12px 32px -12px rgba(43, 20, 10, 0.25);
+
+  /* Grille */
+  --max-width: 1180px;
+
+  /* Tailles minimales */
+  --touch: 48px;
+}
