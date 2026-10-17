@@ -10,7 +10,7 @@ export async function TemplateCard({ item, locale }: { item: CatalogItem; locale
   return (
     <Link
       href={`/modeles/${item.slug}`}
-      className="group block rounded-card bg-surface p-3 shadow-float transition-transform duration-300 [transform-style:preserve-3d] hover:[transform:perspective(900px)_rotateX(4deg)_rotateY(-4deg)] motion-reduce:hover:transform-none rtl:hover:[transform:perspective(900px)_rotateX(4deg)_rotateY(4deg)]"
+      className="reveal group block rounded-card bg-surface p-3 shadow-float transition-transform duration-300 [transform-style:preserve-3d] hover:[transform:perspective(900px)_rotateX(4deg)_rotateY(-4deg)] motion-reduce:hover:transform-none rtl:hover:[transform:perspective(900px)_rotateX(4deg)_rotateY(4deg)]"
     >
       <div className="relative overflow-hidden rounded-t-full bg-wall">
         {/* eslint-disable-next-line @next/next/no-img-element -- aperçus SVG/WebP déjà optimisés */}

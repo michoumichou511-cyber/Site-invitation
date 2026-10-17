@@ -32,7 +32,7 @@ async function PricingContent() {
         <h2 className="text-[28px] text-cedar">{p("optionsTitle")}</h2>
         <ul className="mt-4 grid gap-3 md:grid-cols-2">
           {(p.raw("options") as string[]).map((o) => (
-            <li key={o} className="rounded-card border border-wall bg-surface p-4">
+            <li key={o} className="reveal rounded-card border border-wall bg-surface p-4">
               {o}
             </li>
           ))}

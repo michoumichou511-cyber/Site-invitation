@@ -75,3 +75,129 @@ body {
   --font-display-family: var(--font-reem-kufi);
   --font-script-family: var(--font-aref-ruqaa);
 }
+
+/* ---------------------------------------------------------------------------
+   Mouvement du site, en CSS seul : rien à télécharger, 60 i/s (opacité et
+   déplacements uniquement), et tout reste lisible si l'animation ne se lance pas.
+   GSAP (titres, héro au défilement) vient en plus, au premier geste.
+   --------------------------------------------------------------------------- */
+@keyframes rise {
+  from {
+    opacity: 0.01;
+    translate: 0 22px;
+  }
+}
+
+/* À l'ouverture de la page : sans partir de l'invisible, pour que le navigateur compte
+   le texte comme affiché tout de suite (LCP). */
+@keyframes enter {
+  from {
+    opacity: 0.4;
+    translate: 0 16px;
+  }
+}
+
+@keyframes pop {
+  from {
+    opacity: 0.01;
+    scale: 0.82;
+  }
+}
+
+@keyframes bob {
+  50% {
+    translate: 0 -10px;
+  }
+}
+
+@keyframes sheen {
+  from {
+    background-position: 160% 0;
+  }
+  to {
+    background-position: -60% 0;
+  }
+}
+
+@keyframes ring {
+  from {
+    box-shadow: 0 0 0 0 rgb(37 211 102 / 0.55);
+  }
+  to {
+    box-shadow: 0 0 0 16px rgb(37 211 102 / 0);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Apparition à l'ouverture de la page, en cascade (--i = rang). */
+  .rise {
+    animation: enter 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    animation-delay: calc(var(--i, 0) * 90ms + 40ms);
+  }
+
+  /* Pastilles du héro : surgissent puis flottent doucement. */
+  .chip-in {
+    animation:
+      pop 0.6s cubic-bezier(0.3, 1.5, 0.5, 1) both,
+      bob 6s ease-in-out infinite;
+    animation-delay: calc(var(--i, 0) * 150ms + 600ms), calc(var(--i, 0) * -1.4s);
+  }
+
+  .bob {
+    animation: bob 7s ease-in-out infinite;
+  }
+
+  /* Pages secondaires : titre et chapeau montent en cascade à l'arrivée. Seulement les
+     textes (un déplacement sur un conteneur décalerait les aperçus d'invitation plein écran). */
+  #contenu > main:not(.home) > :is(h1, h2, p) {
+    animation: enter 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+  #contenu > main:not(.home) > :is(h1, h2, p):nth-child(2) {
+    animation-delay: 90ms;
+  }
+  #contenu > main:not(.home) > :is(h1, h2, p):nth-child(n + 3) {
+    animation-delay: 180ms;
+  }
+
+  /* Cartes révélées au défilement (sans JavaScript, navigateurs récents ;
+     ailleurs elles sont simplement visibles). */
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 75%;
+    }
+  }
+
+  /* Reflet qui passe sur les boutons principaux. */
+  .sheen {
+    background-image: linear-gradient(
+      100deg,
+      transparent 35%,
+      rgb(255 255 255 / 0.35) 50%,
+      transparent 65%
+    );
+    background-size: 250% 100%;
+    background-repeat: no-repeat;
+    animation: sheen 3.2s ease-in-out 1.4s infinite;
+  }
+
+  /* Bouton WhatsApp : trois pulsations, puis il se tient tranquille. */
+  .ring {
+    animation: ring 1.6s ease-out 2.5s 3;
+  }
+
+  /* Retour au toucher sur tous les boutons ronds. */
+  #contenu :is(a, button).rounded-full {
+    transition:
+      scale 0.15s ease,
+      translate 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+  #contenu :is(a, button).rounded-full:hover {
+    translate: 0 -2px;
+  }
+  #contenu :is(a, button).rounded-full:active {
+    scale: 0.96;
+  }
+}

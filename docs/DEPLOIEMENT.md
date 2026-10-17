@@ -8,12 +8,12 @@ Cloudflare construit et publie le site à chaque push. Sur Cloudflare, `pnpm run
 
 1. Tableau de bord Cloudflare → **Workers & Pages** → **Create** → onglet **Workers** → **Import a repository** → choisir `Site-invitation`. (Pas « Pages » : le site a besoin d'un Worker.)
 2. Réglages du projet :
-   - **Project name** : `louloua` (doit être identique au `name` de `wrangler.jsonc`)
+   - **Project name** : `site-invitation` (doit être identique au `name` de `wrangler.jsonc`)
    - **Production branch** : `main`
    - **Build command** : `pnpm run build` (valeur par défaut)
    - **Deploy command** : `npx wrangler deploy` (valeur par défaut)
    - **Variables de build** : `NODE_VERSION` = `22`
-3. **Save and Deploy**. Après quelques minutes, le site est en ligne sur `https://louloua.<votre-sous-domaine>.workers.dev`.
+3. **Save and Deploy**. Après quelques minutes, le site est en ligne sur `https://site-invitation.<votre-sous-domaine>.workers.dev`.
 4. Créer le premier compte admin depuis votre ordinateur (une seule fois) :
    `npx wrangler login` puis `pnpm admin:create -- vous@exemple.com "mot de passe de 12 caractères ou plus" "Votre nom" --remote`.
 
@@ -73,12 +73,12 @@ pnpm deploy                   # crée D1 et KV si besoin, tables, 6 modèles, pu
 pnpm admin:create -- vous@exemple.com "mot de passe" "Votre nom" --remote
 ```
 
-Le site est alors en ligne sur `https://louloua.<votre-compte>.workers.dev`. À la première connexion sur `/fr/admin`, la double authentification est demandée : scannez le QR code avec Google Authenticator, Microsoft Authenticator ou 2FAS, et gardez les codes de secours.
+Le site est alors en ligne sur `https://site-invitation.<votre-compte>.workers.dev`. À la première connexion sur `/fr/admin`, la double authentification est demandée : scannez le QR code avec Google Authenticator, Microsoft Authenticator ou 2FAS, et gardez les codes de secours.
 
 ## 5. Brancher le domaine
 
 1. Acheter le `.com` dans Cloudflare (Domain Registration, prix coûtant) ou y transférer ses DNS.
-2. Workers & Pages → `louloua` → Settings → Domains & Routes → Add → Custom domain → `votre-domaine.com` (et `www` si voulu).
+2. Workers & Pages → `site-invitation` → Settings → Domains & Routes → Add → Custom domain → `votre-domaine.com` (et `www` si voulu).
 3. Mettre `PUBLIC_SITE_URL` et `BETTER_AUTH_URL` à jour, puis `pnpm deploy`.
 
 ## 6. Ce qui tourne tout seul

@@ -47,7 +47,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
   };
 
   return (
-    <main>
+    <main className="home">
       <HeroStage copy={copy} />
       <HowItWorks />
       <FeaturedModels items={catalog} locale={locale} />

@@ -4,7 +4,7 @@
    canvas / three.js : les objets mutés (canvas, texture, caméra) ne sont pas de l'état React. */
 
 import dynamic from "next/dynamic";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { onFirstInteraction } from "@/lib/idle";
 import { KarakouScreen } from "./KarakouScreen";
 import { drawScreen, SCREEN_H, SCREEN_W } from "./screens";
@@ -68,6 +68,9 @@ function canRun3D() {
     return false;
   }
 }
+
+/** Rang dans la cascade d'apparition (classes .rise / .chip-in de globals.css). */
+const order = (i: number) => ({ "--i": i }) as CSSProperties;
 
 const POSITIONS = [
   "top-[8%] start-0",
@@ -198,17 +201,25 @@ export function HeroStage({ copy }: { copy: HeroCopy }) {
     <section ref={stage} className="relative h-[300vh] motion-reduce:h-auto">
       <div className="sticky top-0 mx-auto grid h-svh max-w-site grid-rows-[auto_1fr] content-start gap-2 px-4 pt-20 motion-reduce:relative md:grid-cols-2 md:grid-rows-1 md:items-center md:gap-6 md:pt-0">
         <div className="z-10 flex flex-col gap-3 md:gap-5">
-          <span className="text-sm font-bold tracking-[0.14em] text-cedar uppercase rtl:tracking-normal">
+          <span
+            className="rise text-sm font-bold tracking-[0.14em] text-cedar uppercase rtl:tracking-normal"
+            style={order(0)}
+          >
             {copy.eyebrow}
           </span>
-          <h1 className="text-[clamp(30px,8.5vw,40px)] [text-wrap:balance] text-ink md:text-[clamp(38px,5.4vw,64px)]">
+          <h1
+            style={order(1)}
+            className="rise text-[clamp(30px,8.5vw,40px)] [text-wrap:balance] text-ink md:text-[clamp(38px,5.4vw,64px)]"
+          >
             {copy.title}
           </h1>
-          <p className="max-w-[44ch] text-ink-soft md:text-lg">{copy.lead}</p>
-          <div className="flex flex-wrap gap-3">
+          <p className="rise max-w-[44ch] text-ink-soft md:text-lg" style={order(2)}>
+            {copy.lead}
+          </p>
+          <div className="rise flex flex-wrap gap-3" style={order(3)}>
             <a
               href={copy.ctaHref}
-              className="inline-flex min-h-12 items-center rounded-full bg-sea px-6 font-bold text-white"
+              className="sheen inline-flex min-h-12 items-center rounded-full bg-sea px-6 font-bold text-white"
             >
               {copy.cta}
             </a>
@@ -233,7 +244,8 @@ export function HeroStage({ copy }: { copy: HeroCopy }) {
         </div>
 
         <div
-          className="relative h-[56svh] w-full md:h-[min(78svh,720px)]"
+          className="rise relative h-[56svh] w-full md:h-[min(78svh,720px)]"
+          style={order(2)}
           role="img"
           aria-label={copy.phoneLabel}
         >
@@ -243,7 +255,10 @@ export function HeroStage({ copy }: { copy: HeroCopy }) {
               <PhoneScene screen={screen} state={state} version={version} />
             </div>
           ) : (
-            <div ref={fallbackHost} className="absolute inset-0 grid place-items-center py-[6%]">
+            <div
+              ref={fallbackHost}
+              className="bob absolute inset-0 grid place-items-center py-[6%]"
+            >
               <KarakouScreen className="h-full w-auto rounded-[34px] border-[10px] border-[#2B140A] bg-[#2B140A] shadow-float" />
             </div>
           )}
@@ -251,7 +266,8 @@ export function HeroStage({ copy }: { copy: HeroCopy }) {
             {copy.chips.map((chip, i) => (
               <div
                 key={chip.k}
-                className={`absolute z-10 flex items-center gap-2.5 rounded-card border border-wall bg-surface px-3 py-2 text-xs leading-tight shadow-float md:px-3.5 md:py-2.5 md:text-sm ${POSITIONS[i]}`}
+                style={order(i)}
+                className={`chip-in absolute z-10 flex items-center gap-2.5 rounded-card border border-wall bg-surface px-3 py-2 text-xs leading-tight shadow-float md:px-3.5 md:py-2.5 md:text-sm ${POSITIONS[i]}`}
               >
                 <span className="grid size-7 flex-none place-items-center rounded-[10px] bg-sea-light/40 text-sea md:size-8">
                   <svg

@@ -11,7 +11,8 @@ import { randomBytes } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
 const DB = "louloua-db";
-const WORKER = "louloua";
+// Nom du Worker = celui du projet Cloudflare (Workers Builds publie sous ce nom).
+const WORKER = readFileSync("wrangler.jsonc", "utf8").match(/"name":\s*"([^"]+)"/)[1];
 const KV_TITLE = "louloua-files";
 const env = { ...process.env, CI: "1", WRANGLER_SEND_METRICS: "false" };
 

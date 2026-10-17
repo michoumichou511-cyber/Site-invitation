@@ -22,7 +22,7 @@ export async function HowItWorks() {
         {steps.map(([title, text], i) => (
           <li
             key={i}
-            className="flex flex-col gap-2 rounded-card border border-wall bg-surface p-6"
+            className="reveal flex flex-col gap-2 rounded-card border border-wall bg-surface p-6"
           >
             <span className="font-display text-3xl text-sea">{i + 1}</span>
             <strong className="text-xl">{title}</strong>
@@ -66,7 +66,7 @@ export async function Compare() {
   return (
     <section className="mx-auto max-w-site px-4 py-16">
       <SplitTitle className={sectionTitle}>{t("compareTitle")}</SplitTitle>
-      <div className="mt-8 overflow-hidden rounded-card border border-wall bg-surface">
+      <div className="reveal mt-8 overflow-hidden rounded-card border border-wall bg-surface">
         <table className="w-full text-start">
           <thead>
             <tr className="bg-wall/60">
@@ -111,7 +111,7 @@ export async function Packs({ showTitle = true }: { showTitle?: boolean }) {
           return (
             <article
               key={id}
-              className={`relative flex flex-col gap-4 rounded-card bg-surface p-6 ${popular ? "border-2 border-sea shadow-float" : "border border-wall"}`}
+              className={`reveal relative flex flex-col gap-4 rounded-card bg-surface p-6 ${popular ? "border-2 border-sea shadow-float" : "border border-wall"}`}
             >
               {popular && (
                 <span className="absolute start-6 -top-3 rounded-full bg-sea px-3 py-1 text-sm font-bold text-white">
@@ -157,7 +157,7 @@ export async function ReviewsList({ reviews }: { reviews: PublicReview[] }) {
   return (
     <ul className="mt-8 grid gap-5 md:grid-cols-3">
       {reviews.map((r) => (
-        <li key={r.id} className="rounded-card border border-wall bg-surface p-6">
+        <li key={r.id} className="reveal rounded-card border border-wall bg-surface p-6">
           <p aria-label={t("rating", { rating: r.rating })} className="text-brass">
             {"★".repeat(r.rating)}
             <span className="text-wall">{"★".repeat(5 - r.rating)}</span>
@@ -173,7 +173,7 @@ export async function FaqList({ limit }: { limit?: number }) {
   const t = await getTranslations("faq");
   const items = (t.raw("items") as [string, string][]).slice(0, limit);
   return (
-    <div className="mt-8 divide-y divide-wall rounded-card border border-wall bg-surface">
+    <div className="reveal mt-8 divide-y divide-wall rounded-card border border-wall bg-surface">
       {items.map(([q, a]) => (
         <details key={q} className="group px-5">
           <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 py-3 font-bold [&::-webkit-details-marker]:hidden">
@@ -194,12 +194,12 @@ export async function FinalCta() {
   const c = await getTranslations("common");
   return (
     <section className="mx-auto max-w-site px-4 py-16">
-      <div className="rounded-card bg-sea px-6 py-12 text-center text-white md:px-12">
+      <div className="reveal rounded-card bg-sea px-6 py-12 text-center text-white md:px-12">
         <h2 className="text-[28px] md:text-[40px]">{t("ctaTitle")}</h2>
         <p className="mx-auto mt-3 max-w-prose text-white/90">{t("ctaText")}</p>
         <Link
           href="/modeles"
-          className="mt-6 inline-flex min-h-12 items-center rounded-full bg-surface px-6 font-bold text-sea"
+          className="sheen mt-6 inline-flex min-h-12 items-center rounded-full bg-surface px-6 font-bold text-sea"
         >
           {c("seeModels")}
         </Link>

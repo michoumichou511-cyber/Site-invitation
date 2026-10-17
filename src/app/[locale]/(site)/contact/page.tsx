@@ -37,7 +37,7 @@ async function ContactContent() {
               href={href}
               target={href.startsWith("http") ? "_blank" : undefined}
               rel="noopener"
-              className="flex min-h-16 flex-col justify-center rounded-card border border-wall bg-surface p-5"
+              className="reveal flex min-h-16 flex-col justify-center rounded-card border border-wall bg-surface p-5"
             >
               <span className="text-sm text-ink-soft">{label}</span>
               <bdi className="font-bold text-sea">{value}</bdi>
